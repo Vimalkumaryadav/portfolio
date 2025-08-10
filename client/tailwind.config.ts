@@ -18,11 +18,11 @@ export default {
         input: "var(--input)",
         ring: "var(--ring)",
         background: "var(--background)",
+        foreground: "var(--foreground)",
         text: {
           DEFAULT: "var(--foreground)",
           foreground: "var(--foreground)",
         },
-        foreground: "var(--foreground)",
         primary: {
           DEFAULT: "var(--primary)",
           foreground: "var(--primary-foreground)",
