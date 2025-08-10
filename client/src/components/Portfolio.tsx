@@ -87,9 +87,13 @@ const Portfolio: React.FC = () => {
   };
 
   const downloadResume = () => {
-    // In a real implementation, you would add the PDF file to the public folder
-    // and link to it here
-    alert('Resume download functionality would be implemented here. Please add your PDF resume file to the project.');
+    const resumePath = '/portfolio/assets/VimalKumarYadav-Resume.pdf';
+    const link = document.createElement('a');
+    link.href = resumePath;
+    link.download = 'VimalKumarYadav-Resume.pdf';
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
   };
 
   const navLinks = [
