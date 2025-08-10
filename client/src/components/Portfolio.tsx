@@ -1,16 +1,23 @@
 import React, { useEffect, useState } from 'react';
 import { useTheme } from './ThemeProvider';
 import { portfolioData } from '../data/portfolioData';
+import { useAnalytics } from '../hooks/useAnalytics';
 
 type Theme = 'light' | 'dark' | 'blue' | 'purple' | 'green' | 'orange';
 
 const Portfolio: React.FC = () => {
   const { theme, setTheme } = useTheme();
+  const { trackPageView, trackEvent } = useAnalytics();
   const [activeSection, setActiveSection] = useState('home');
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [scrollProgress, setScrollProgress] = useState(0);
   const [isHeaderScrolled, setIsHeaderScrolled] = useState(false);
   const [isThemeDropdownOpen, setIsThemeDropdownOpen] = useState(false);
+
+  // Track initial page view
+  useEffect(() => {
+    trackPageView('/portfolio');
+  }, []);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -94,6 +101,9 @@ const Portfolio: React.FC = () => {
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
+    
+    // Track resume download event
+    trackEvent('download', 'resume', 'VimalKumarYadav-Resume.pdf');
   };
 
   const navLinks = [
