@@ -1,10 +1,29 @@
 # Overview
 
-This is a full-stack TypeScript portfolio website built with React, Express, and modern tooling. The project showcases Vimal Kumar Yadav's professional experience as a Software Engineer II and QA Automation Expert. The application features a modern, responsive design with theme switching capabilities and a complete UI component system built on Radix UI primitives with Tailwind CSS styling.
+This is a customizable portfolio website for Vimal Kumar Yadav built with React, TypeScript, and modern design patterns. The project showcases his professional experience as a Software Engineer II and QA Automation Expert. The application features a modern, responsive design with multiple theme options (6 themes), smooth auto-scrolling navigation, programming language icons, profile photo capability, and easy editing through data files. The website is optimized for GitHub Pages deployment.
 
 # User Preferences
 
 Preferred communication style: Simple, everyday language.
+
+# Portfolio Website Features
+
+## Current Implementation
+- **Multi-Theme System**: 6 color themes (Light, Dark, Blue, Purple, Green, Orange) with visual theme selector
+- **Profile Photo**: Editable profile photo section with placeholder and upload functionality
+- **Auto-Scroll Navigation**: Smooth scrolling between sections when clicking header navigation
+- **Programming Language Icons**: Icons for Java, JavaScript, Node.js, Selenium, Git, etc.
+- **Responsive Design**: Mobile-first approach with optimized layouts
+- **GitHub Pages Ready**: Includes deployment workflow and documentation
+
+## Recent Changes (January 2025)
+- Added 6 theme options with visual color indicators in theme selector
+- Implemented profile photo section with editing capability and fallback SVG
+- Enhanced navigation with smooth auto-scrolling to sections
+- Added programming language and tool icons throughout skills section
+- Created GitHub Actions workflow for automatic deployment
+- Added comprehensive README with deployment instructions
+- Optimized mobile responsive design and animations
 
 # System Architecture
 

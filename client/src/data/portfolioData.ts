@@ -7,7 +7,8 @@ export const portfolioData = {
     location: "Hyderabad, India",
     linkedin: "https://www.linkedin.com/in/yadavvk/",
     github: "https://github.com/Vimalkumaryadav",
-    birthDate: "30 Jan 1996"
+    birthDate: "30 Jan 1996",
+    photo: "/api/placeholder/300/300" // Placeholder for profile photo
   },
   
   about: "QA Automation Engineer with 6+ years of experience in web and API testing using Selenium (Java), WebDriverIO, Cucumber BDD, Postman, and SQL for data validation. Proficient in Maven, Git, Perforce, JIRA, and reporting tools, with a strong record of delivering quality software in Agile/Scrum environments.",

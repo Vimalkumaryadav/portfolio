@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { useTheme } from './ThemeProvider';
 import { portfolioData } from '../data/portfolioData';
 
+type Theme = 'light' | 'dark' | 'blue' | 'purple' | 'green' | 'orange';
+
 const Portfolio: React.FC = () => {
   const { theme, setTheme } = useTheme();
   const [activeSection, setActiveSection] = useState('home');
@@ -89,9 +91,12 @@ const Portfolio: React.FC = () => {
   ];
 
   const themeButtons = [
-    { theme: 'light' as Theme, icon: 'fas fa-sun', title: 'Light Theme' },
-    { theme: 'dark' as Theme, icon: 'fas fa-moon', title: 'Dark Theme' },
-    { theme: 'blue' as Theme, icon: 'fas fa-briefcase', title: 'Blue Professional' }
+    { theme: 'light' as Theme, icon: 'fas fa-sun', title: 'Light Theme', color: '#3b82f6' },
+    { theme: 'dark' as Theme, icon: 'fas fa-moon', title: 'Dark Theme', color: '#374151' },
+    { theme: 'blue' as Theme, icon: 'fas fa-briefcase', title: 'Blue Professional', color: '#1e40af' },
+    { theme: 'purple' as Theme, icon: 'fas fa-palette', title: 'Purple Creative', color: '#8b5cf6' },
+    { theme: 'green' as Theme, icon: 'fas fa-leaf', title: 'Green Nature', color: '#22c55e' },
+    { theme: 'orange' as Theme, icon: 'fas fa-fire', title: 'Orange Energy', color: '#f97316' }
   ];
 
   return (
@@ -148,16 +153,16 @@ const Portfolio: React.FC = () => {
               </ul>
             </nav>
 
-            <div className="flex gap-2">
-              {themeButtons.map(({ theme: themeOption, icon, title }) => (
+            <div className="theme-selector">
+              {themeButtons.map(({ theme: themeOption, icon, title, color }) => (
                 <button
                   key={themeOption}
-                  className={`p-2 border rounded-lg transition-all duration-300 ${
-                    theme === themeOption ? 'active' : ''
-                  }`}
+                  className={`theme-btn ${theme === themeOption ? 'active' : ''}`}
                   style={{
-                    borderColor: theme === themeOption ? 'var(--primary-color)' : 'var(--border-color)',
-                    color: theme === themeOption ? 'var(--primary-color)' : 'var(--text-secondary)'
+                    borderColor: theme === themeOption ? color : 'var(--border-color)',
+                    color: color,
+                    backgroundColor: theme === themeOption ? `${color}15` : 'transparent',
+                    ringColor: theme === themeOption ? color : 'transparent'
                   }}
                   onClick={() => setTheme(themeOption)}
                   title={title}
@@ -182,6 +187,39 @@ const Portfolio: React.FC = () => {
       <section id="home" className="hero">
         <div className="max-w-6xl mx-auto px-8">
           <div className="fade-in text-center">
+            <div className="mb-8 flex justify-center">
+              <div className="profile-photo-container">
+                <img
+                  src={portfolioData.personal.photo}
+                  alt={portfolioData.personal.name}
+                  className="w-48 h-48 rounded-full object-cover border-4"
+                  style={{ borderColor: 'var(--primary-color)' }}
+                  onError={(e) => {
+                    // Fallback to SVG avatar if image fails to load
+                    const target = e.target as HTMLImageElement;
+                    target.src = `data:image/svg+xml,${encodeURIComponent(`
+                      <svg xmlns="http://www.w3.org/2000/svg" width="300" height="300" viewBox="0 0 300 300">
+                        <rect width="300" height="300" fill="#f3f4f6"/>
+                        <circle cx="150" cy="120" r="50" fill="#9ca3af"/>
+                        <circle cx="150" cy="250" r="80" fill="#9ca3af"/>
+                        <text x="150" y="280" text-anchor="middle" font-family="Arial" font-size="16" fill="#6b7280">Click to add photo</text>
+                      </svg>
+                    `)}`;
+                  }}
+                />
+                <button 
+                  className="profile-photo-edit-btn"
+                  style={{ borderColor: 'var(--primary-color)', color: 'var(--primary-color)' }}
+                  onClick={() => {
+                    // In a real implementation, this would open a file picker
+                    alert('Photo upload functionality would be implemented here. You can add your profile photo to replace the placeholder.');
+                  }}
+                  title="Change profile photo"
+                >
+                  <i className="fas fa-camera text-sm" />
+                </button>
+              </div>
+            </div>
             <h1 className="hero-title">{portfolioData.personal.name}</h1>
             <p className="text-2xl mb-8" style={{ color: 'var(--text-secondary)' }}>
               {portfolioData.personal.title}
