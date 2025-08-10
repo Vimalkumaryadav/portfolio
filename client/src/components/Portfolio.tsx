@@ -10,6 +10,7 @@ const Portfolio: React.FC = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [scrollProgress, setScrollProgress] = useState(0);
   const [isHeaderScrolled, setIsHeaderScrolled] = useState(false);
+  const [isThemeDropdownOpen, setIsThemeDropdownOpen] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -33,11 +34,21 @@ const Portfolio: React.FC = () => {
       setActiveSection(current);
     };
 
+    const handleClickOutside = (event: MouseEvent) => {
+      if (isThemeDropdownOpen && !(event.target as Element).closest('.theme-dropdown-container')) {
+        setIsThemeDropdownOpen(false);
+      }
+    };
+
     window.addEventListener('scroll', handleScroll);
+    document.addEventListener('click', handleClickOutside);
     handleScroll();
 
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+      document.removeEventListener('click', handleClickOutside);
+    };
+  }, [isThemeDropdownOpen]);
 
   useEffect(() => {
     // Intersection Observer for animations
@@ -90,13 +101,13 @@ const Portfolio: React.FC = () => {
     { id: 'contact', label: 'Contact' }
   ];
 
-  const themeButtons = [
-    { theme: 'light' as Theme, icon: 'fas fa-sun', title: 'Light Theme', color: '#3b82f6' },
-    { theme: 'dark' as Theme, icon: 'fas fa-moon', title: 'Dark Theme', color: '#374151' },
-    { theme: 'blue' as Theme, icon: 'fas fa-briefcase', title: 'Blue Professional', color: '#1e40af' },
-    { theme: 'purple' as Theme, icon: 'fas fa-palette', title: 'Purple Creative', color: '#8b5cf6' },
-    { theme: 'green' as Theme, icon: 'fas fa-leaf', title: 'Green Nature', color: '#22c55e' },
-    { theme: 'orange' as Theme, icon: 'fas fa-fire', title: 'Orange Energy', color: '#f97316' }
+  const themeOptions = [
+    { theme: 'light' as Theme, label: 'Light Mode', color: '#3b82f6' },
+    { theme: 'dark' as Theme, label: 'Dark Mode', color: '#1f2937' },
+    { theme: 'blue' as Theme, label: 'Blue Professional', color: '#1e40af' },
+    { theme: 'purple' as Theme, label: 'Purple Creative', color: '#8b5cf6' },
+    { theme: 'green' as Theme, label: 'Green Nature', color: '#22c55e' },
+    { theme: 'orange' as Theme, label: 'Orange Energy', color: '#f97316' }
   ];
 
   return (
@@ -153,23 +164,72 @@ const Portfolio: React.FC = () => {
               </ul>
             </nav>
 
-            <div className="theme-selector">
-              {themeButtons.map(({ theme: themeOption, icon, title, color }) => (
-                <button
-                  key={themeOption}
-                  className={`theme-btn ${theme === themeOption ? 'active' : ''}`}
+            <div className="theme-dropdown-container relative">
+              <button
+                className="theme-dropdown-trigger flex items-center gap-2 px-4 py-2 border rounded-lg transition-all duration-300"
+                style={{
+                  borderColor: 'var(--border-color)',
+                  backgroundColor: 'var(--surface-color)',
+                  color: 'var(--text-primary)'
+                }}
+                onClick={() => setIsThemeDropdownOpen(!isThemeDropdownOpen)}
+              >
+                <div 
+                  className="w-4 h-4 rounded-full border-2"
                   style={{
-                    borderColor: theme === themeOption ? color : 'var(--border-color)',
-                    color: color,
-                    backgroundColor: theme === themeOption ? `${color}15` : 'transparent',
-                    ringColor: theme === themeOption ? color : 'transparent'
+                    backgroundColor: themeOptions.find(opt => opt.theme === theme)?.color,
+                    borderColor: 'var(--border-color)'
                   }}
-                  onClick={() => setTheme(themeOption)}
-                  title={title}
+                />
+                <span className="text-sm font-medium">
+                  {themeOptions.find(opt => opt.theme === theme)?.label}
+                </span>
+                <i className={`fas fa-chevron-${isThemeDropdownOpen ? 'up' : 'down'} text-xs`} />
+              </button>
+              
+              {isThemeDropdownOpen && (
+                <div 
+                  className="theme-dropdown-menu absolute top-full right-0 mt-2 py-2 rounded-lg border shadow-lg min-w-48 z-50"
+                  style={{
+                    backgroundColor: 'var(--surface-color)',
+                    borderColor: 'var(--border-color)',
+                    boxShadow: 'var(--shadow-lg)'
+                  }}
                 >
-                  <i className={icon} />
-                </button>
-              ))}
+                  {themeOptions.map((option) => (
+                    <button
+                      key={option.theme}
+                      className="w-full flex items-center gap-3 px-4 py-2 text-left hover:bg-opacity-10 transition-all duration-200"
+                      style={{
+                        color: 'var(--text-primary)',
+                        backgroundColor: theme === option.theme ? `${option.color}15` : 'transparent'
+                      }}
+                      onClick={() => {
+                        setTheme(option.theme);
+                        setIsThemeDropdownOpen(false);
+                      }}
+                      onMouseEnter={(e) => {
+                        e.currentTarget.style.backgroundColor = `${option.color}10`;
+                      }}
+                      onMouseLeave={(e) => {
+                        e.currentTarget.style.backgroundColor = theme === option.theme ? `${option.color}15` : 'transparent';
+                      }}
+                    >
+                      <div 
+                        className="w-4 h-4 rounded-full border-2"
+                        style={{
+                          backgroundColor: option.color,
+                          borderColor: 'var(--border-color)'
+                        }}
+                      />
+                      <span className="text-sm font-medium">{option.label}</span>
+                      {theme === option.theme && (
+                        <i className="fas fa-check ml-auto text-xs" style={{ color: option.color }} />
+                      )}
+                    </button>
+                  ))}
+                </div>
+              )}
             </div>
 
             <button
