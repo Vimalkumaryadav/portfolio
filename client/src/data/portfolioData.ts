@@ -8,7 +8,7 @@ export const portfolioData = {
     linkedin: "https://www.linkedin.com/in/yadavvk/",
     github: "https://github.com/Vimalkumaryadav",
     birthDate: "30 Jan 1996",
-    photo: "/assets/yadavvimalk.jpg" // Update this with your actual image file name and extension
+    photo: "/portfolio/assets/yadavvimalk.jpg"
   },
   
   about: "QA Automation Engineer with 6+ years of experience in web and API testing using Selenium (Java), WebDriverIO, Cucumber BDD, Postman, and SQL for data validation. Proficient in Maven, Git, Perforce, JIRA, and reporting tools, with a strong record of delivering quality software in Agile/Scrum environments.",
