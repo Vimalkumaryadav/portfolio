@@ -58,6 +58,27 @@ const Portfolio: React.FC = () => {
   }, [isThemeDropdownOpen]);
 
   useEffect(() => {
+    // Add click outside handler to close mobile menu
+    const handleClickOutside = (event: MouseEvent) => {
+      const target = event.target as HTMLElement;
+      const isMenuButton = target.closest('button')?.classList.contains('md:hidden');
+      const isNavMenu = target.closest('ul')?.classList.contains('max-md:flex-col');
+      
+      if (!isMenuButton && !isNavMenu && isMobileMenuOpen) {
+        setIsMobileMenuOpen(false);
+      }
+    };
+
+    // Add scroll handler to close mobile menu
+    const handleScroll = () => {
+      if (isMobileMenuOpen) {
+        setIsMobileMenuOpen(false);
+      }
+    };
+
+    document.addEventListener('click', handleClickOutside);
+    window.addEventListener('scroll', handleScroll);
+
     // Intersection Observer for animations
     const observerOptions = {
       threshold: 0.1,
@@ -76,8 +97,12 @@ const Portfolio: React.FC = () => {
       observer.observe(el);
     });
 
-    return () => observer.disconnect();
-  }, []);
+    return () => {
+      observer.disconnect();
+      document.removeEventListener('click', handleClickOutside);
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, [isMobileMenuOpen]);
 
   const scrollToSection = (sectionId: string) => {
     const element = document.getElementById(sectionId);
@@ -148,7 +173,7 @@ const Portfolio: React.FC = () => {
             </a>
             
             <nav>
-              <ul className={`flex gap-8 max-md:${isMobileMenuOpen ? 'flex' : 'hidden'} max-md:absolute max-md:top-full max-md:left-0 max-md:right-0 max-md:flex-col max-md:p-4 max-md:border-t`}
+              <ul className={`flex gap-8 max-md:${isMobileMenuOpen ? 'flex' : 'hidden'} max-md:absolute max-md:top-full max-md:left-0 max-md:right-0 max-md:flex-col max-md:p-4 max-md:border-t max-md:bg-opacity-100`}
                   style={{ backgroundColor: 'var(--surface-color)', borderColor: 'var(--border-color)' }}>
                 {navLinks.map(link => (
                   <li key={link.id}>
@@ -156,7 +181,7 @@ const Portfolio: React.FC = () => {
                       href={`#${link.id}`}
                       className={`font-medium transition-colors duration-300 relative ${
                         activeSection === link.id ? 'active' : ''
-                      }`}
+                      } block w-full py-2`}
                       style={{ 
                         color: activeSection === link.id ? 'var(--primary-color)' : 'var(--text-secondary)' 
                       }}
