@@ -1,0 +1,722 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vimal Kumar Yadav - QA Automation Engineer Portfolio</title>
+    <meta name="description" content="Portfolio of Vimal Kumar Yadav, Software Engineer II and QA Automation Expert with 6+ years of experience in web and API testing">
+    <meta name="keywords" content="QA Automation, Selenium, WebDriverIO, Java, JavaScript, Software Testing">
+    
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.15.1/devicon.min.css">
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        'inter': ['Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        'theme-primary': 'var(--theme-primary)',
+                        'theme-secondary': 'var(--theme-secondary)',
+                        'theme-background': 'var(--theme-background)',
+                        'theme-surface': 'var(--theme-surface)',
+                        'theme-text': 'var(--theme-text)',
+                        'theme-text-secondary': 'var(--theme-text-secondary)',
+                        'theme-border': 'var(--theme-border)',
+                    }
+                }
+            }
+        };
+    </script>
+    
+    <style>
+        :root {
+            /* Light Theme (Default) */
+            --theme-primary: #2563eb;
+            --theme-secondary: #64748b;
+            --theme-background: #ffffff;
+            --theme-surface: #f8fafc;
+            --theme-text: #1e293b;
+            --theme-text-secondary: #475569;
+            --theme-border: #e2e8f0;
+        }
+
+        [data-theme="dark"] {
+            --theme-primary: #3b82f6;
+            --theme-secondary: #94a3b8;
+            --theme-background: #0f172a;
+            --theme-surface: #1e293b;
+            --theme-text: #f1f5f9;
+            --theme-text-secondary: #cbd5e1;
+            --theme-border: #334155;
+        }
+
+        [data-theme="blue-professional"] {
+            --theme-primary: #1e40af;
+            --theme-secondary: #475569;
+            --theme-background: #f8fafc;
+            --theme-surface: #ffffff;
+            --theme-text: #334155;
+            --theme-text-secondary: #64748b;
+            --theme-border: #cbd5e1;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--theme-background);
+            color: var(--theme-text);
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        .theme-surface {
+            background-color: var(--theme-surface);
+            border-color: var(--theme-border);
+        }
+
+        .smooth-scroll {
+            scroll-behavior: smooth;
+        }
+
+        .timeline-line {
+            position: relative;
+        }
+
+        .timeline-line::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: linear-gradient(to bottom, var(--theme-primary), var(--theme-secondary));
+        }
+
+        .skill-badge {
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .skill-badge:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+
+        .nav-link {
+            position: relative;
+            transition: color 0.2s ease;
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background-color: var(--theme-primary);
+            transition: width 0.3s ease;
+        }
+
+        .nav-link:hover::after,
+        .nav-link.active::after {
+            width: 100%;
+        }
+
+        .fade-in {
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeInUp 0.6s ease forwards;
+        }
+
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .floating-theme-switcher {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1000;
+            background: var(--theme-surface);
+            border: 1px solid var(--theme-border);
+            border-radius: 12px;
+            padding: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        @media (max-width: 768px) {
+            .floating-theme-switcher {
+                top: 10px;
+                right: 10px;
+                padding: 6px;
+            }
+        }
+    </style>
+</head>
+<body class="smooth-scroll">
+    <!-- Theme Switcher -->
+    <div class="floating-theme-switcher">
+        <div class="flex space-x-2">
+            <button onclick="setTheme('light')" class="w-8 h-8 rounded-full bg-white border-2 border-gray-300 hover:border-blue-500 transition-colors" title="Light Theme"></button>
+            <button onclick="setTheme('dark')" class="w-8 h-8 rounded-full bg-gray-900 border-2 border-gray-600 hover:border-blue-400 transition-colors" title="Dark Theme"></button>
+            <button onclick="setTheme('blue-professional')" class="w-8 h-8 rounded-full bg-blue-100 border-2 border-blue-300 hover:border-blue-600 transition-colors" title="Blue Professional"></button>
+        </div>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="sticky top-0 z-50 theme-surface border-b backdrop-blur-sm bg-opacity-90">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <div class="flex-shrink-0">
+                    <span class="text-xl font-bold" style="color: var(--theme-primary);">VKY</span>
+                </div>
+                
+                <!-- Desktop Navigation -->
+                <div class="hidden md:block">
+                    <div class="ml-10 flex items-baseline space-x-8">
+                        <a href="#home" class="nav-link px-3 py-2 text-sm font-medium">Home</a>
+                        <a href="#about" class="nav-link px-3 py-2 text-sm font-medium">About</a>
+                        <a href="#experience" class="nav-link px-3 py-2 text-sm font-medium">Experience</a>
+                        <a href="#skills" class="nav-link px-3 py-2 text-sm font-medium">Skills</a>
+                        <a href="#education" class="nav-link px-3 py-2 text-sm font-medium">Education</a>
+                        <a href="#contact" class="nav-link px-3 py-2 text-sm font-medium">Contact</a>
+                    </div>
+                </div>
+                
+                <!-- Mobile menu button -->
+                <div class="md:hidden">
+                    <button id="mobile-menu-button" class="inline-flex items-center justify-center p-2 rounded-md hover:bg-opacity-75" style="color: var(--theme-text);">
+                        <i class="fas fa-bars text-xl"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Mobile Navigation -->
+        <div id="mobile-menu" class="md:hidden hidden theme-surface border-t">
+            <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
+                <a href="#home" class="nav-link block px-3 py-2 text-base font-medium">Home</a>
+                <a href="#about" class="nav-link block px-3 py-2 text-base font-medium">About</a>
+                <a href="#experience" class="nav-link block px-3 py-2 text-base font-medium">Experience</a>
+                <a href="#skills" class="nav-link block px-3 py-2 text-base font-medium">Skills</a>
+                <a href="#education" class="nav-link block px-3 py-2 text-base font-medium">Education</a>
+                <a href="#contact" class="nav-link block px-3 py-2 text-base font-medium">Contact</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="min-h-screen flex items-center">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
+            <div class="text-center fade-in">
+                <div class="mb-8">
+                    <div class="w-40 h-40 mx-auto rounded-full theme-surface border-4 flex items-center justify-center mb-6" style="border-color: var(--theme-primary);">
+                        <i class="fas fa-user text-6xl" style="color: var(--theme-primary);"></i>
+                    </div>
+                    <h1 class="text-4xl md:text-6xl font-bold mb-4">Vimal Kumar Yadav</h1>
+                    <p class="text-xl md:text-2xl font-medium mb-6" style="color: var(--theme-primary);">Software Engineer II & QA Automation Expert</p>
+                    <p class="text-lg max-w-3xl mx-auto mb-8" style="color: var(--theme-text-secondary);">
+                        6+ years of experience in web and API testing using Selenium, WebDriverIO, and modern automation frameworks. 
+                        Passionate about delivering quality software in Agile environments.
+                    </p>
+                </div>
+                
+                <div class="flex flex-col sm:flex-row items-center justify-center space-y-4 sm:space-y-0 sm:space-x-6 mb-8">
+                    <div class="flex items-center space-x-2">
+                        <i class="fas fa-envelope" style="color: var(--theme-primary);"></i>
+                        <span>yadavkumarvimal96@gmail.com</span>
+                    </div>
+                    <div class="flex items-center space-x-2">
+                        <i class="fas fa-phone" style="color: var(--theme-primary);"></i>
+                        <span>+91 8688928060</span>
+                    </div>
+                    <div class="flex items-center space-x-2">
+                        <i class="fas fa-map-marker-alt" style="color: var(--theme-primary);"></i>
+                        <span>Hyderabad, India</span>
+                    </div>
+                </div>
+                
+                <div class="flex flex-col sm:flex-row items-center justify-center space-y-4 sm:space-y-0 sm:space-x-4">
+                    <a href="#contact" class="inline-flex items-center px-6 py-3 rounded-lg font-medium transition-colors text-white" style="background-color: var(--theme-primary);">
+                        <i class="fas fa-paper-plane mr-2"></i>
+                        Get In Touch
+                    </a>
+                    <a href="#" onclick="downloadResume()" class="inline-flex items-center px-6 py-3 rounded-lg font-medium border-2 transition-colors" style="border-color: var(--theme-primary); color: var(--theme-primary);">
+                        <i class="fas fa-download mr-2"></i>
+                        Download Resume
+                    </a>
+                    <div class="flex space-x-4">
+                        <a href="https://www.linkedin.com/in/yadavvk/" target="_blank" class="w-12 h-12 rounded-full theme-surface border flex items-center justify-center hover:scale-110 transition-transform">
+                            <i class="fab fa-linkedin-in text-xl" style="color: var(--theme-primary);"></i>
+                        </a>
+                        <a href="https://github.com/Vimalkumaryadav" target="_blank" class="w-12 h-12 rounded-full theme-surface border flex items-center justify-center hover:scale-110 transition-transform">
+                            <i class="fab fa-github text-xl" style="color: var(--theme-primary);"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="py-20 theme-surface">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16 fade-in">
+                <h2 class="text-3xl md:text-4xl font-bold mb-4">Professional Summary</h2>
+                <div class="w-20 h-1 mx-auto rounded" style="background-color: var(--theme-primary);"></div>
+            </div>
+            
+            <div class="max-w-4xl mx-auto">
+                <div class="theme-surface rounded-2xl p-8 border shadow-lg">
+                    <div class="text-lg leading-relaxed space-y-4" style="color: var(--theme-text-secondary);">
+                        <p>
+                            <strong>QA Automation Engineer</strong> with <span style="color: var(--theme-primary);">6+ years of experience</span> 
+                            in web and API testing using cutting-edge automation frameworks and tools.
+                        </p>
+                        <p>
+                            Proficient in <strong>Selenium (Java)</strong>, <strong>WebDriverIO</strong>, <strong>Cucumber BDD</strong>, 
+                            <strong>Postman</strong>, and <strong>SQL</strong> for comprehensive data validation and quality assurance.
+                        </p>
+                        <p>
+                            Expert in development tools including <strong>Maven</strong>, <strong>Git</strong>, <strong>Perforce</strong>, 
+                            and <strong>JIRA</strong>, with extensive experience in reporting and analytics tools.
+                        </p>
+                        <p>
+                            Strong track record of delivering quality software solutions in <strong>Agile/Scrum environments</strong>, 
+                            with excellent collaboration skills and attention to detail.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Experience Section -->
+    <section id="experience" class="py-20">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16 fade-in">
+                <h2 class="text-3xl md:text-4xl font-bold mb-4">Professional Experience</h2>
+                <div class="w-20 h-1 mx-auto rounded" style="background-color: var(--theme-primary);"></div>
+            </div>
+            
+            <div class="max-w-4xl mx-auto">
+                <div class="timeline-line pl-8 space-y-12">
+                    <!-- Electronics Arts -->
+                    <div class="relative fade-in">
+                        <div class="absolute -left-6 w-4 h-4 rounded-full" style="background-color: var(--theme-primary);"></div>
+                        <div class="theme-surface rounded-2xl p-8 border shadow-lg">
+                            <div class="flex flex-col md:flex-row md:items-center md:justify-between mb-4">
+                                <div>
+                                    <h3 class="text-xl font-bold mb-2">Software Engineer II</h3>
+                                    <p class="text-lg font-medium mb-2" style="color: var(--theme-primary);">Electronics Arts</p>
+                                </div>
+                                <div class="text-sm" style="color: var(--theme-text-secondary);">
+                                    <div class="flex items-center space-x-2 mb-1">
+                                        <i class="fas fa-calendar"></i>
+                                        <span>Nov 2023 – Present</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <ul class="space-y-3" style="color: var(--theme-text-secondary);">
+                                <li class="flex items-start space-x-3">
+                                    <i class="fas fa-check-circle mt-1" style="color: var(--theme-primary);"></i>
+                                    <span>Designed and developed automated test cases using the WebDriverIO–Node.js framework</span>
+                                </li>
+                                <li class="flex items-start space-x-3">
+                                    <i class="fas fa-check-circle mt-1" style="color: var(--theme-primary);"></i>
+                                    <span>Utilized Perforce for version control, ensuring efficient collaboration and code management</span>
+                                </li>
+                                <li class="flex items-start space-x-3">
+                                    <i class="fas fa-check-circle mt-1" style="color: var(--theme-primary);"></i>
+                                    <span>Performed regular maintenance and defect fixes for the regression test suite to ensure stability</span>
+                                </li>
+                                <li class="flex items-start space-x-3">
+                                    <i class="fas fa-check-circle mt-1" style="color: var(--theme-primary);"></i>
+                                    <span>Leveraged GitHub Copilot to refactor and optimize existing code for improved readability and performance</span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <!-- Wipro Limited -->
+                    <div class="relative fade-in">
+                        <div class="absolute -left-6 w-4 h-4 rounded-full" style="background-color: var(--theme-primary);"></div>
+                        <div class="theme-surface rounded-2xl p-8 border shadow-lg">
+                            <div class="flex flex-col md:flex-row md:items-center md:justify-between mb-4">
+                                <div>
+                                    <h3 class="text-xl font-bold mb-2">Software Engineer</h3>
+                                    <p class="text-lg font-medium mb-2" style="color: var(--theme-primary);">Wipro Limited</p>
+                                </div>
+                                <div class="text-sm" style="color: var(--theme-text-secondary);">
+                                    <div class="flex items-center space-x-2 mb-1">
+                                        <i class="fas fa-calendar"></i>
+                                        <span>Mar 2022 – May 2023</span>
+                                    </div>
+                                    <div class="flex items-center space-x-2">
+                                        <i class="fas fa-map-marker-alt"></i>
+                                        <span>Hyderabad, India</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <ul class="space-y-3" style="color: var(--theme-text-secondary);">
+                                <li class="flex items-start space-x-3">
+                                    <i class="fas fa-check-circle mt-1" style="color: var(--theme-primary);"></i>
+                                    <span>Performed manual API testing using Postman to validate the quality, reliability, and functionality of RESTful APIs</span>
+                                </li>
+                                <li class="flex items-start space-x-3">
+                                    <i class="fas fa-check-circle mt-1" style="color: var(--theme-primary);"></i>
+                                    <span>Developed Early Integration Testing (EIT) scripts to validate API functionality in the early stages of development</span>
+                                </li>
+                                <li class="flex items-start space-x-3">
+                                    <i class="fas fa-check-circle mt-1" style="color: var(--theme-primary);"></i>
+                                    <span>Created and executed System Integration Testing (SIT) scripts to verify end-to-end API functionality</span>
+                                </li>
+                                <li class="flex items-start space-x-3">
+                                    <i class="fas fa-check-circle mt-1" style="color: var(--theme-primary);"></i>
+                                    <span>Uploaded test results and documentation to PractiTest, ensuring stakeholders had timely access to testing progress</span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <!-- Tecra System -->
+                    <div class="relative fade-in">
+                        <div class="absolute -left-6 w-4 h-4 rounded-full" style="background-color: var(--theme-primary);"></div>
+                        <div class="theme-surface rounded-2xl p-8 border shadow-lg">
+                            <div class="flex flex-col md:flex-row md:items-center md:justify-between mb-4">
+                                <div>
+                                    <h3 class="text-xl font-bold mb-2">QA Engineer</h3>
+                                    <p class="text-lg font-medium mb-2" style="color: var(--theme-primary);">Tecra System Pvt Ltd</p>
+                                </div>
+                                <div class="text-sm" style="color: var(--theme-text-secondary);">
+                                    <div class="flex items-center space-x-2 mb-1">
+                                        <i class="fas fa-calendar"></i>
+                                        <span>Oct 2018 – Jan 2022</span>
+                                    </div>
+                                    <div class="flex items-center space-x-2">
+                                        <i class="fas fa-map-marker-alt"></i>
+                                        <span>Hyderabad, India</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <ul class="space-y-3" style="color: var(--theme-text-secondary);">
+                                <li class="flex items-start space-x-3">
+                                    <i class="fas fa-check-circle mt-1" style="color: var(--theme-primary);"></i>
+                                    <span>Designed, developed, and maintained Web UI automation scripts using Selenium (Java), Cucumber BDD, Maven, and Git</span>
+                                </li>
+                                <li class="flex items-start space-x-3">
+                                    <i class="fas fa-check-circle mt-1" style="color: var(--theme-primary);"></i>
+                                    <span>Ensured timely resolution of critical/high-priority defects before UAT and maintained clear reporting through JIRA</span>
+                                </li>
+                                <li class="flex items-start space-x-3">
+                                    <i class="fas fa-check-circle mt-1" style="color: var(--theme-primary);"></i>
+                                    <span>Collaborated closely with the client's Scrum team, actively participating in sprint ceremonies</span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Skills Section -->
+    <section id="skills" class="py-20 theme-surface">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16 fade-in">
+                <h2 class="text-3xl md:text-4xl font-bold mb-4">Technical Skills</h2>
+                <div class="w-20 h-1 mx-auto rounded" style="background-color: var(--theme-primary);"></div>
+            </div>
+            
+            <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+                <div class="skill-badge theme-surface rounded-2xl p-6 border text-center">
+                    <i class="devicon-java-plain text-4xl mb-4" style="color: var(--theme-primary);"></i>
+                    <h3 class="font-semibold">Java</h3>
+                </div>
+                
+                <div class="skill-badge theme-surface rounded-2xl p-6 border text-center">
+                    <i class="devicon-javascript-plain text-4xl mb-4" style="color: var(--theme-primary);"></i>
+                    <h3 class="font-semibold">JavaScript</h3>
+                </div>
+                
+                <div class="skill-badge theme-surface rounded-2xl p-6 border text-center">
+                    <i class="devicon-selenium-original text-4xl mb-4" style="color: var(--theme-primary);"></i>
+                    <h3 class="font-semibold">Selenium</h3>
+                </div>
+                
+                <div class="skill-badge theme-surface rounded-2xl p-6 border text-center">
+                    <i class="fas fa-robot text-4xl mb-4" style="color: var(--theme-primary);"></i>
+                    <h3 class="font-semibold">WebDriverIO</h3>
+                </div>
+                
+                <div class="skill-badge theme-surface rounded-2xl p-6 border text-center">
+                    <i class="fas fa-rocket text-4xl mb-4" style="color: var(--theme-primary);"></i>
+                    <h3 class="font-semibold">Postman</h3>
+                </div>
+                
+                <div class="skill-badge theme-surface rounded-2xl p-6 border text-center">
+                    <i class="devicon-git-plain text-4xl mb-4" style="color: var(--theme-primary);"></i>
+                    <h3 class="font-semibold">Git</h3>
+                </div>
+                
+                <div class="skill-badge theme-surface rounded-2xl p-6 border text-center">
+                    <i class="fas fa-tasks text-4xl mb-4" style="color: var(--theme-primary);"></i>
+                    <h3 class="font-semibold">JIRA</h3>
+                </div>
+                
+                <div class="skill-badge theme-surface rounded-2xl p-6 border text-center">
+                    <i class="fas fa-database text-4xl mb-4" style="color: var(--theme-primary);"></i>
+                    <h3 class="font-semibold">SQL</h3>
+                </div>
+                
+                <div class="skill-badge theme-surface rounded-2xl p-6 border text-center">
+                    <i class="fas fa-cog text-4xl mb-4" style="color: var(--theme-primary);"></i>
+                    <h3 class="font-semibold">Maven</h3>
+                </div>
+                
+                <div class="skill-badge theme-surface rounded-2xl p-6 border text-center">
+                    <i class="fas fa-cucumber text-4xl mb-4" style="color: var(--theme-primary);"></i>
+                    <h3 class="font-semibold">Cucumber BDD</h3>
+                </div>
+                
+                <div class="skill-badge theme-surface rounded-2xl p-6 border text-center">
+                    <i class="fas fa-shield-alt text-4xl mb-4" style="color: var(--theme-primary);"></i>
+                    <h3 class="font-semibold">Rest Assured</h3>
+                </div>
+                
+                <div class="skill-badge theme-surface rounded-2xl p-6 border text-center">
+                    <i class="fas fa-code-branch text-4xl mb-4" style="color: var(--theme-primary);"></i>
+                    <h3 class="font-semibold">Perforce</h3>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Education Section -->
+    <section id="education" class="py-20">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16 fade-in">
+                <h2 class="text-3xl md:text-4xl font-bold mb-4">Education</h2>
+                <div class="w-20 h-1 mx-auto rounded" style="background-color: var(--theme-primary);"></div>
+            </div>
+            
+            <div class="max-w-4xl mx-auto">
+                <div class="theme-surface rounded-2xl p-8 border shadow-lg">
+                    <div class="flex items-start space-x-6">
+                        <div class="w-16 h-16 rounded-full theme-surface border-2 flex items-center justify-center flex-shrink-0" style="border-color: var(--theme-primary);">
+                            <i class="fas fa-graduation-cap text-2xl" style="color: var(--theme-primary);"></i>
+                        </div>
+                        <div class="flex-1">
+                            <h3 class="text-xl font-bold mb-2">Bachelor of Technology</h3>
+                            <p class="text-lg font-medium mb-2" style="color: var(--theme-primary);">Electronics and Communication Engineering (ECE)</p>
+                            <p class="text-lg font-medium mb-2">H.I.T.A.M, Hyderabad, India</p>
+                            <div class="flex items-center space-x-4 text-sm" style="color: var(--theme-text-secondary);">
+                                <div class="flex items-center space-x-2">
+                                    <i class="fas fa-calendar"></i>
+                                    <span>Jun 2014 – Aug 2018</span>
+                                </div>
+                                <div class="flex items-center space-x-2">
+                                    <i class="fas fa-map-marker-alt"></i>
+                                    <span>Hyderabad, India</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="py-20 theme-surface">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16 fade-in">
+                <h2 class="text-3xl md:text-4xl font-bold mb-4">Get In Touch</h2>
+                <div class="w-20 h-1 mx-auto rounded" style="background-color: var(--theme-primary);"></div>
+                <p class="text-lg mt-6 max-w-2xl mx-auto" style="color: var(--theme-text-secondary);">
+                    I'm always open to discussing new opportunities and interesting projects. 
+                    Feel free to reach out if you'd like to connect!
+                </p>
+            </div>
+            
+            <div class="max-w-4xl mx-auto">
+                <div class="grid md:grid-cols-3 gap-8">
+                    <div class="text-center">
+                        <div class="w-16 h-16 rounded-full mx-auto mb-4 flex items-center justify-center" style="background-color: var(--theme-primary);">
+                            <i class="fas fa-envelope text-2xl text-white"></i>
+                        </div>
+                        <h3 class="text-lg font-semibold mb-2">Email</h3>
+                        <a href="mailto:yadavkumarvimal96@gmail.com" class="hover:underline" style="color: var(--theme-text-secondary);">
+                            yadavkumarvimal96@gmail.com
+                        </a>
+                    </div>
+                    
+                    <div class="text-center">
+                        <div class="w-16 h-16 rounded-full mx-auto mb-4 flex items-center justify-center" style="background-color: var(--theme-primary);">
+                            <i class="fab fa-linkedin text-2xl text-white"></i>
+                        </div>
+                        <h3 class="text-lg font-semibold mb-2">LinkedIn</h3>
+                        <a href="https://www.linkedin.com/in/yadavvk/" target="_blank" class="hover:underline" style="color: var(--theme-text-secondary);">
+                            linkedin.com/in/yadavvk
+                        </a>
+                    </div>
+                    
+                    <div class="text-center">
+                        <div class="w-16 h-16 rounded-full mx-auto mb-4 flex items-center justify-center" style="background-color: var(--theme-primary);">
+                            <i class="fab fa-github text-2xl text-white"></i>
+                        </div>
+                        <h3 class="text-lg font-semibold mb-2">GitHub</h3>
+                        <a href="https://github.com/Vimalkumaryadav" target="_blank" class="hover:underline" style="color: var(--theme-text-secondary);">
+                            github.com/Vimalkumaryadav
+                        </a>
+                    </div>
+                </div>
+                
+                <div class="text-center mt-12">
+                    <a href="mailto:yadavkumarvimal96@gmail.com" class="inline-flex items-center px-8 py-4 rounded-lg font-medium text-white text-lg transition-transform hover:scale-105" style="background-color: var(--theme-primary);">
+                        <i class="fas fa-paper-plane mr-3"></i>
+                        Send Me an Email
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="border-t py-8">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center">
+                <p style="color: var(--theme-text-secondary);">
+                    © 2024 Vimal Kumar Yadav. Built with ❤️ for GitHub Pages.
+                </p>
+                <div class="flex justify-center space-x-6 mt-4">
+                    <span class="text-sm" style="color: var(--theme-text-secondary);">Languages:</span>
+                    <span class="text-sm">Hindi</span>
+                    <span class="text-sm">English</span>
+                    <span class="text-sm">Telugu</span>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Theme Management
+        (function() {
+            function setTheme(theme) {
+                document.documentElement.setAttribute('data-theme', theme);
+                localStorage.setItem('portfolio-theme', theme);
+            }
+
+            function loadTheme() {
+                const savedTheme = localStorage.getItem('portfolio-theme') || 'light';
+                setTheme(savedTheme);
+            }
+
+            // Make setTheme globally available
+            window.setTheme = setTheme;
+            
+            // Load theme on page load
+            loadTheme();
+        })();
+
+        // Mobile Navigation Toggle
+        (function() {
+            const mobileMenuButton = document.getElementById('mobile-menu-button');
+            const mobileMenu = document.getElementById('mobile-menu');
+            
+            mobileMenuButton.addEventListener('click', function() {
+                mobileMenu.classList.toggle('hidden');
+            });
+        })();
+
+        // Smooth scrolling for navigation links
+        (function() {
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    const target = document.querySelector(this.getAttribute('href'));
+                    if (target) {
+                        target.scrollIntoView({
+                            behavior: 'smooth',
+                            block: 'start'
+                        });
+                        
+                        // Close mobile menu if open
+                        document.getElementById('mobile-menu').classList.add('hidden');
+                    }
+                });
+            });
+        })();
+
+        // Active navigation highlighting
+        (function() {
+            function updateActiveNav() {
+                const sections = document.querySelectorAll('section[id]');
+                const navLinks = document.querySelectorAll('.nav-link');
+                
+                let currentSection = '';
+                sections.forEach(section => {
+                    const sectionTop = section.offsetTop;
+                    const sectionHeight = section.clientHeight;
+                    if (window.scrollY >= sectionTop - 200) {
+                        currentSection = section.getAttribute('id');
+                    }
+                });
+
+                navLinks.forEach(link => {
+                    link.classList.remove('active');
+                    if (link.getAttribute('href') === `#${currentSection}`) {
+                        link.classList.add('active');
+                    }
+                });
+            }
+
+            window.addEventListener('scroll', updateActiveNav);
+            updateActiveNav(); // Initial call
+        })();
+
+        // Fade in animation on scroll
+        (function() {
+            const observerOptions = {
+                threshold: 0.1,
+                rootMargin: '0px 0px -50px 0px'
+            };
+
+            const observer = new IntersectionObserver(function(entries) {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.animationDelay = '0.1s';
+                        entry.target.classList.add('fade-in');
+                    }
+                });
+            }, observerOptions);
+
+            // Observe all sections except the first one
+            document.querySelectorAll('section:not(#home)').forEach(section => {
+                observer.observe(section);
+            });
+        })();
+
+        // Download Resume Function
+        function downloadResume() {
+            // TODO: Implement resume download functionality
+            // This would typically involve serving the PDF file from the GitHub repository
+            alert('Resume download functionality will be implemented when you upload your PDF to the repository.');
+            
+            // Example implementation when PDF is available:
+            // const link = document.createElement('a');
+            // link.href = './assets/VimalKumarYadav-Resume.pdf';
+            // link.download = 'VimalKumarYadav-Resume.pdf';
+            // link.click();
+        }
+    </script>
+</body>
+</html>

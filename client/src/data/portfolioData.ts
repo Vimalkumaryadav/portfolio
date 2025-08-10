@@ -2,13 +2,13 @@ export const portfolioData = {
   personal: {
     name: "Vimal Kumar Yadav",
     title: "Software Engineer II & QA Automation Expert",
-    email: "yadavkumarvimal96@gmail.com",
+    email: "yadavvimalk@gmail.com",
     phone: "+91 8688928060",
     location: "Hyderabad, India",
     linkedin: "https://www.linkedin.com/in/yadavvk/",
     github: "https://github.com/Vimalkumaryadav",
     birthDate: "30 Jan 1996",
-    photo: "/api/placeholder/300/300" // Placeholder for profile photo
+    photo: "/assets/yadavvimalk.jpg" // Update this with your actual image file name and extension
   },
   
   about: "QA Automation Engineer with 6+ years of experience in web and API testing using Selenium (Java), WebDriverIO, Cucumber BDD, Postman, and SQL for data validation. Proficient in Maven, Git, Perforce, JIRA, and reporting tools, with a strong record of delivering quality software in Agile/Scrum environments.",
