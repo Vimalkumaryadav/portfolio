@@ -15,7 +15,7 @@ declare global {
 export const useAnalytics = () => {
   const trackPageView = (path: string) => {
     if (typeof window.gtag !== 'undefined') {
-      window.gtag('config', 'Y8N11B410S', {
+      window.gtag('config', 'G-Y8N11B410S', {
         page_path: path,
       });
     }
