@@ -24,7 +24,7 @@ jobs:
       run: npm ci
 
     - name: Build client
-      run: npm run build:client
+      run: npm run build
       env:
         NODE_ENV: production
 
