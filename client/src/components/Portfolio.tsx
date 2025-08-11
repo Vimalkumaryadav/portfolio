@@ -61,8 +61,8 @@ const Portfolio: React.FC = () => {
     // Add click outside handler to close mobile menu
     const handleClickOutside = (event: MouseEvent) => {
       const target = event.target as HTMLElement;
-      const isMenuButton = target.closest('button')?.classList.contains('md:hidden');
-      const isNavMenu = target.closest('ul')?.classList.contains('max-md:flex-col');
+      const isMenuButton = target.closest('.mobile-menu-button');
+      const isNavMenu = target.closest('.mobile-nav-menu');
       
       if (!isMenuButton && !isNavMenu && isMobileMenuOpen) {
         setIsMobileMenuOpen(false);
@@ -71,9 +71,7 @@ const Portfolio: React.FC = () => {
 
     // Add scroll handler to close mobile menu
     const handleScroll = () => {
-      if (isMobileMenuOpen) {
-        setIsMobileMenuOpen(false);
-      }
+      setIsMobileMenuOpen(false);
     };
 
     document.addEventListener('click', handleClickOutside);
@@ -173,10 +171,12 @@ const Portfolio: React.FC = () => {
             </a>
             
             <nav className="relative z-50">
-              <ul className={`flex gap-8 max-md:${isMobileMenuOpen ? 'flex' : 'hidden'} max-md:fixed max-md:top-[72px] max-md:left-0 max-md:right-0 max-md:flex-col max-md:p-4 max-md:border-t max-md:shadow-lg max-md:backdrop-blur-sm`}
+              <ul className={`mobile-nav-menu flex gap-8 max-md:${isMobileMenuOpen ? 'flex' : 'hidden'} max-md:fixed max-md:top-[72px] max-md:left-0 max-md:right-0 max-md:flex-col max-md:p-4 max-md:border-t max-md:shadow-lg max-md:backdrop-blur-sm max-md:overflow-hidden`}
                   style={{ 
                     backgroundColor: 'var(--surface-color)',
                     borderColor: 'var(--border-color)',
+                    maxHeight: isMobileMenuOpen ? '100vh' : '0',
+                    transition: 'max-height 0.3s ease-in-out'
                   }}>
                 {navLinks.map(link => (
                   <li key={link.id}>
@@ -275,9 +275,12 @@ const Portfolio: React.FC = () => {
             </div>
 
             <button
-              className="md:hidden text-xl"
+              className="mobile-menu-button md:hidden text-xl z-50"
               style={{ color: 'var(--text-primary)' }}
-              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+              onClick={(e) => {
+                e.stopPropagation();
+                setIsMobileMenuOpen(!isMobileMenuOpen);
+              }}
             >
               <i className={isMobileMenuOpen ? 'fas fa-times' : 'fas fa-bars'} />
             </button>
