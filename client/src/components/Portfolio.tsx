@@ -172,9 +172,12 @@ const Portfolio: React.FC = () => {
               VKY
             </a>
             
-            <nav>
-              <ul className={`flex gap-8 max-md:${isMobileMenuOpen ? 'flex' : 'hidden'} max-md:absolute max-md:top-full max-md:left-0 max-md:right-0 max-md:flex-col max-md:p-4 max-md:border-t max-md:bg-opacity-100`}
-                  style={{ backgroundColor: 'var(--surface-color)', borderColor: 'var(--border-color)' }}>
+            <nav className="relative z-50">
+              <ul className={`flex gap-8 max-md:${isMobileMenuOpen ? 'flex' : 'hidden'} max-md:fixed max-md:top-[72px] max-md:left-0 max-md:right-0 max-md:flex-col max-md:p-4 max-md:border-t max-md:shadow-lg max-md:backdrop-blur-sm`}
+                  style={{ 
+                    backgroundColor: 'var(--surface-color)',
+                    borderColor: 'var(--border-color)',
+                  }}>
                 {navLinks.map(link => (
                   <li key={link.id}>
                     <a
