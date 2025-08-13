@@ -109,13 +109,26 @@ const Portfolio: React.FC = () => {
           }
         }
 
-        // Fallback to static JSON file
-        const base = (import.meta as any)?.env?.BASE_URL ?? '/';
-        const url = `${base}assets/recommendations.json?t=${Date.now()}`;
-        const res = await fetch(url, { cache: 'no-store' });
-        if (res.ok) {
-          const json = await res.json();
-          if (Array.isArray(json)) setRecommendations(json as Recommendation[]);
+        // Fallback to static JSON file — try multiple safe paths
+        const candidates = [
+          `assets/recommendations.json?t=${Date.now()}`,
+          `${(import.meta as any)?.env?.BASE_URL ?? '/'}assets/recommendations.json?t=${Date.now()}`,
+          `/assets/recommendations.json?t=${Date.now()}`,
+          `/portfolio/assets/recommendations.json?t=${Date.now()}`,
+        ];
+        for (const url of candidates) {
+          try {
+            const res = await fetch(url, { cache: 'no-store' });
+            if (res.ok) {
+              const json = await res.json();
+              if (Array.isArray(json) && json.length) {
+                setRecommendations(json as Recommendation[]);
+                break;
+              }
+            }
+          } catch (err) {
+            // move to next candidate
+          }
         }
       } catch (e) {
         // ignore network errors; section will show local/static items only
