@@ -420,17 +420,6 @@ const Portfolio: React.FC = () => {
                     `)}`;
                   }}
                 />
-                <button 
-                  className="profile-photo-edit-btn"
-                  style={{ borderColor: 'var(--primary-color)', color: 'var(--primary-color)' }}
-                  onClick={() => {
-                    // In a real implementation, this would open a file picker
-                    alert('Photo upload functionality would be implemented here. You can add your profile photo to replace the placeholder.');
-                  }}
-                  title="Change profile photo"
-                >
-                  <i className="fas fa-camera text-sm" />
-                </button>
               </div>
             </div>
             <h1 className="hero-title">{portfolioData.personal.name}</h1>
