@@ -24,6 +24,7 @@ const Portfolio: React.FC = () => {
   const [isHeaderScrolled, setIsHeaderScrolled] = useState(false);
   const [isThemeDropdownOpen, setIsThemeDropdownOpen] = useState(false);
   const [recommendations, setRecommendations] = useState<Recommendation[]>([]);
+  const [isSmallScreen, setIsSmallScreen] = useState(false);
 
   // Track initial page view
   useEffect(() => {
@@ -67,6 +68,15 @@ const Portfolio: React.FC = () => {
       document.removeEventListener('click', handleClickOutside);
     };
   }, [isThemeDropdownOpen]);
+
+  // Track viewport to scope mobile-only menu animations/visibility
+  useEffect(() => {
+    const mq = window.matchMedia('(max-width: 767px)');
+    const update = () => setIsSmallScreen(mq.matches);
+    update();
+    mq.addEventListener('change', update);
+    return () => mq.removeEventListener('change', update);
+  }, []);
 
   // Fetch recommendations from public assets and merge with any bundled ones
   useEffect(() => {
@@ -209,12 +219,12 @@ const Portfolio: React.FC = () => {
             </a>
             
             <nav className="relative z-50">
-              <ul className={`mobile-nav-menu flex gap-8 max-md:${isMobileMenuOpen ? 'flex' : 'hidden'} max-md:fixed max-md:top-[72px] max-md:left-0 max-md:right-0 max-md:h-[calc(100vh-72px)] max-md:flex-col max-md:p-4 max-md:border-t max-md:shadow-lg max-md:backdrop-blur-sm`}
+      <ul className={`mobile-nav-menu flex gap-8 max-md:${isMobileMenuOpen ? 'flex' : 'hidden'} max-md:fixed max-md:top-[72px] max-md:left-0 max-md:right-0 max-md:h-[calc(100vh-72px)] max-md:flex-col max-md:p-4 max-md:border-t max-md:shadow-lg max-md:backdrop-blur-sm`}
                   style={{ 
                     backgroundColor: 'var(--surface-color)',
                     borderColor: 'var(--border-color)',
-                    opacity: isMobileMenuOpen ? '1' : '0',
-                    visibility: isMobileMenuOpen ? 'visible' : 'hidden',
+        opacity: isSmallScreen ? (isMobileMenuOpen ? '1' : '0') : '1',
+        visibility: isSmallScreen ? (isMobileMenuOpen ? 'visible' : 'hidden') : 'visible',
                     transition: 'opacity 0.3s ease-in-out, visibility 0.3s ease-in-out'
                   }}>
                 {navLinks.map(link => (
