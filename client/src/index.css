@@ -45,37 +45,47 @@
 }
 
 [data-theme="dark"] {
-  /* Neutral dark base with subtle blue accent */
-  --primary-color: hsl(210, 80%, 60%);
-  --secondary-color: hsl(220, 12%, 60%);
-  --accent-color: hsl(210, 90%, 55%);
-  --background-color: hsl(220, 15%, 8%);
-  --surface-color: hsl(220, 12%, 13%);
+  /* Neutral slate base with subtle cyan accent (accessible contrast) */
+  --primary-color: hsl(190, 95%, 60%);       /* cyan-400 */
+  --secondary-color: hsl(220, 12%, 62%);     /* slate-400 */
+  --accent-color: hsl(190, 90%, 50%);        /* cyan-500 */
+  --background-color: hsl(215, 27%, 10%);    /* slate-900-ish */
+  --surface-color: hsl(215, 22%, 14%);       /* slate-800 */
   --text-primary: hsl(0, 0%, 98%);
-  --text-secondary: hsl(220, 12%, 65%);
-  --border-color: hsl(220, 12%, 20%);
+  --text-secondary: hsl(220, 12%, 68%);
+  --border-color: hsl(215, 18%, 22%);
   --shadow: 0 1px 3px 0 rgb(0 0 0 / 0.4), 0 1px 2px -1px rgb(0 0 0 / 0.35);
   --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.4), 0 4px 6px -4px rgb(0 0 0 / 0.4);
 
-  --background: hsl(220, 15%, 8%);
+  --background: hsl(215, 27%, 10%);
   --foreground: hsl(0, 0%, 98%);
-  --card: hsl(220, 12%, 13%);
+  --card: hsl(215, 22%, 14%);
   --card-foreground: hsl(0, 0%, 98%);
-  --popover: hsl(220, 15%, 8%);
+  --popover: hsl(215, 27%, 10%);
   --popover-foreground: hsl(0, 0%, 98%);
-  --primary: hsl(210, 80%, 60%);
-  --primary-foreground: hsl(220, 15%, 8%);
-  --secondary: hsl(220, 12%, 28%);
+  --primary: hsl(190, 95%, 60%);
+  --primary-foreground: hsl(215, 27%, 10%);
+  --secondary: hsl(215, 18%, 24%);
   --secondary-foreground: hsl(0, 0%, 98%);
-  --muted: hsl(220, 12%, 18%);
-  --muted-foreground: hsl(220, 12%, 65%);
-  --accent: hsl(220, 12%, 18%);
-  --accent-foreground: hsl(210, 80%, 60%);
-  --destructive: hsl(0, 84%, 60%);
+  --muted: hsl(215, 18%, 20%);
+  --muted-foreground: hsl(220, 12%, 68%);
+  --accent: hsl(215, 18%, 20%);
+  --accent-foreground: hsl(190, 95%, 60%);
+  --destructive: hsl(0, 74%, 58%);
   --destructive-foreground: hsl(0, 0%, 100%);
-  --border: hsl(220, 12%, 20%);
-  --input: hsl(220, 12%, 20%);
-  --ring: hsl(210, 80%, 60%);
+  --border: hsl(215, 18%, 22%);
+  --input: hsl(215, 18%, 22%);
+  --ring: hsl(190, 95%, 60%);
+}
+
+/* Dark-only polish */
+[data-theme="dark"] .header {
+  background-color: rgba(20, 26, 32, 0.75); /* translucent surface */
+  backdrop-filter: saturate(1.2) blur(8px);
+}
+
+[data-theme="dark"] .section:nth-child(even) {
+  background-color: hsl(215, 20%, 12%);
 }
 
 [data-theme="blue"] {
