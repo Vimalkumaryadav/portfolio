@@ -54,24 +54,24 @@ export const portfolioData = {
   
   skills: {
     "Programming Languages": [
-      { name: "Java", icon: "si:java" },
-      { name: "JavaScript", icon: "si:javascript" },
-      { name: "Node.js", icon: "si:nodedotjs" }
+  { name: "Java", icon: "img:https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/java/java-original.svg" },
+  { name: "JavaScript", icon: "img:https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/javascript/javascript-original.svg" },
+  { name: "Node.js", icon: "img:https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/nodejs/nodejs-original.svg" }
     ],
     "Testing Frameworks": [
-      { name: "Selenium", icon: "si:selenium" },
-      { name: "WebDriverIO", icon: "si:webdriverio" },
-      { name: "Cucumber BDD", icon: "si:cucumber" },
-  { name: "Rest Assured", icon: "si:restassured" }
+  { name: "Selenium", icon: "img:https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/selenium/selenium-original.svg" },
+  { name: "WebDriverIO", icon: "img:https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/webdriverio/webdriverio-plain.svg" },
+  { name: "Cucumber BDD", icon: "img:https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/cucumber/cucumber-plain.svg" },
+  { name: "Rest Assured", icon: "img:https://cdn.simpleicons.org/restassured/00A651" }
     ],
     "Tools & Technologies": [
-      { name: "Git", icon: "si:git" },
-      { name: "Maven", icon: "si:apachemaven" },
-      { name: "Postman", icon: "si:postman" },
-      { name: "JIRA", icon: "si:jira" },
-      { name: "SQL", icon: "si:mysql" },
-      { name: "Perforce", icon: "si:perforce" },
-      { name: "GitHub Copilot", icon: "si:githubcopilot" }
+  { name: "Git", icon: "img:https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/git/git-original.svg" },
+  { name: "Maven", icon: "img:https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/apachemaven/apachemaven-original.svg" },
+  { name: "Postman", icon: "img:https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/postman/postman-original.svg" },
+  { name: "JIRA", icon: "img:https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/jira/jira-original.svg" },
+  { name: "SQL", icon: "img:https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/mysql/mysql-original.svg" },
+  { name: "Perforce", icon: "img:https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/perforce/perforce-original.svg" },
+  { name: "GitHub Copilot", icon: "img:https://skillicons.dev/icons?i=githubcopilot" }
     ]
   },
   

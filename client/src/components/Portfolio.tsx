@@ -613,12 +613,32 @@ const Portfolio: React.FC = () => {
                       {(() => {
                         const iconVal = String((skill as any).icon);
                         if (iconVal.startsWith('img:')) {
+                          const primary = iconVal.slice(4);
+                          // Provide a generic fallback map for common tools if primary fails
+                          const fallbacks: Record<string, string> = {
+                            'githubcopilot': 'https://cdn.simpleicons.org/githubcopilot',
+                            'restassured': 'https://cdn.simpleicons.org/restassured',
+                          };
+                          const key = primary.includes('githubcopilot')
+                            ? 'githubcopilot'
+                            : primary.includes('restassured')
+                            ? 'restassured'
+                            : '';
                           return (
                             <img
-                              src={iconVal.slice(4)}
+                              src={primary}
                               alt={String((skill as any).name)}
                               className="w-5 h-5"
                               loading="lazy"
+                              onError={(e) => {
+                                const img = e.currentTarget as HTMLImageElement & { dataset: { tried?: string } };
+                                if (!img.dataset.tried && key && fallbacks[key]) {
+                                  img.dataset.tried = '1';
+                                  img.src = fallbacks[key];
+                                } else {
+                                  img.style.display = 'none';
+                                }
+                              }}
                             />
                           );
                         }
