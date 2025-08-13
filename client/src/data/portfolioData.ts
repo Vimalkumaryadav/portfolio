@@ -55,23 +55,23 @@ export const portfolioData = {
   skills: {
     "Programming Languages": [
   { name: "Java", icon: "img:https://unpkg.com/devicon@2.15.1/icons/java/java-original.svg" },
-  { name: "JavaScript", icon: "img:https://unpkg.com/devicon@2.15.1/icons/javascript/javascript-original.svg" },
+  { name: "JavaScript", icon: "img:https://upload.wikimedia.org/wikipedia/commons/9/99/Unofficial_JavaScript_logo_2.svg" },
   { name: "Node.js", icon: "img:https://unpkg.com/devicon@2.15.1/icons/nodejs/nodejs-original.svg" }
     ],
     "Testing Frameworks": [
   { name: "Selenium", icon: "img:https://cdn.simpleicons.org/selenium/43B02A" },
-  { name: "WebDriverIO", icon: "img:https://unpkg.com/devicon@2.15.1/icons/webdriverio/webdriverio-original.svg" },
+  { name: "WebDriverIO", icon: "img:https://webdriver.io/assets/images/robot-3677788dd63849c56aa5cb3f332b12d5.svg" },
   { name: "Cucumber BDD", icon: "img:https://unpkg.com/devicon@2.15.1/icons/cucumber/cucumber-plain.svg" },
-  { name: "Rest Assured", icon: "img:https://cdn.simpleicons.org/restassured/00A651" }
+  { name: "Rest Assured", icon: "img:https://miro.medium.com/v2/resize:fit:1100/format:webp/1*9p86tphgBGlkJRaX3koyuQ.jpeg" }
     ],
     "Tools & Technologies": [
   { name: "Git", icon: "img:https://unpkg.com/devicon@2.15.1/icons/git/git-original.svg" },
-  { name: "Maven", icon: "img:https://unpkg.com/devicon@2.15.1/icons/apachemaven/apachemaven-original.svg" },
-  { name: "Postman", icon: "img:https://unpkg.com/devicon@2.15.1/icons/postman/postman-original.svg" },
+  { name: "Maven", icon: "img:https://user-images.githubusercontent.com/33158051/103466428-2bd48f00-4d13-11eb-8d30-4602a442bfad.png" },
+  { name: "Postman", icon: "img:https://w7.pngwing.com/pngs/28/245/png-transparent-postman-hd-logo-thumbnail.png" },
   { name: "JIRA", icon: "img:https://unpkg.com/devicon@2.15.1/icons/jira/jira-original.svg" },
   { name: "SQL", icon: "img:https://unpkg.com/devicon@2.15.1/icons/mysql/mysql-original.svg" },
-  { name: "Perforce", icon: "img:https://unpkg.com/devicon@2.15.1/icons/perforce/perforce-original.svg" },
-  { name: "GitHub Copilot", icon: "img:https://skillicons.dev/icons?i=githubcopilot" }
+  { name: "Perforce", icon: "img:https://cdn.brandfetch.io/idGOeHdms6/theme/dark/logo.svg" },
+  { name: "GitHub Copilot", icon: "img:https://uxwing.com/wp-content/themes/uxwing/download/brands-and-social-media/github-copilot-icon.png" }
     ]
   },
   
