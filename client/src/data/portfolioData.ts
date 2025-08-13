@@ -54,23 +54,23 @@ export const portfolioData = {
   
   skills: {
     "Programming Languages": [
-  { name: "Java", icon: "img:https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/java/java-original.svg" },
-  { name: "JavaScript", icon: "img:https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/javascript/javascript-original.svg" },
-  { name: "Node.js", icon: "img:https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/nodejs/nodejs-original.svg" }
+  { name: "Java", icon: "img:https://cdn.jsdelivr.net/npm/devicon@2.15.1/icons/java/java-original.svg" },
+  { name: "JavaScript", icon: "img:https://cdn.jsdelivr.net/npm/devicon@2.15.1/icons/javascript/javascript-original.svg" },
+  { name: "Node.js", icon: "img:https://cdn.jsdelivr.net/npm/devicon@2.15.1/icons/nodejs/nodejs-original.svg" }
     ],
     "Testing Frameworks": [
-  { name: "Selenium", icon: "img:https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/selenium/selenium-original.svg" },
-  { name: "WebDriverIO", icon: "img:https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/webdriverio/webdriverio-plain.svg" },
-  { name: "Cucumber BDD", icon: "img:https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/cucumber/cucumber-plain.svg" },
+  { name: "Selenium", icon: "img:https://cdn.simpleicons.org/selenium/43B02A" },
+  { name: "WebDriverIO", icon: "img:https://cdn.jsdelivr.net/npm/devicon@2.15.1/icons/webdriverio/webdriverio-original.svg" },
+  { name: "Cucumber BDD", icon: "img:https://cdn.jsdelivr.net/npm/devicon@2.15.1/icons/cucumber/cucumber-plain.svg" },
   { name: "Rest Assured", icon: "img:https://cdn.simpleicons.org/restassured/00A651" }
     ],
     "Tools & Technologies": [
-  { name: "Git", icon: "img:https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/git/git-original.svg" },
-  { name: "Maven", icon: "img:https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/apachemaven/apachemaven-original.svg" },
-  { name: "Postman", icon: "img:https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/postman/postman-original.svg" },
-  { name: "JIRA", icon: "img:https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/jira/jira-original.svg" },
-  { name: "SQL", icon: "img:https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/mysql/mysql-original.svg" },
-  { name: "Perforce", icon: "img:https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/perforce/perforce-original.svg" },
+  { name: "Git", icon: "img:https://cdn.jsdelivr.net/npm/devicon@2.15.1/icons/git/git-original.svg" },
+  { name: "Maven", icon: "img:https://cdn.jsdelivr.net/npm/devicon@2.15.1/icons/apachemaven/apachemaven-original.svg" },
+  { name: "Postman", icon: "img:https://cdn.jsdelivr.net/npm/devicon@2.15.1/icons/postman/postman-original.svg" },
+  { name: "JIRA", icon: "img:https://cdn.jsdelivr.net/npm/devicon@2.15.1/icons/jira/jira-original.svg" },
+  { name: "SQL", icon: "img:https://cdn.jsdelivr.net/npm/devicon@2.15.1/icons/mysql/mysql-original.svg" },
+  { name: "Perforce", icon: "img:https://cdn.jsdelivr.net/npm/devicon@2.15.1/icons/perforce/perforce-original.svg" },
   { name: "GitHub Copilot", icon: "img:https://skillicons.dev/icons?i=githubcopilot" }
     ]
   },

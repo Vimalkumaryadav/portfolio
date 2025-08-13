@@ -617,13 +617,21 @@ const Portfolio: React.FC = () => {
                           // Provide a generic fallback map for common tools if primary fails
                           const fallbacks: Record<string, string> = {
                             'githubcopilot': 'https://cdn.simpleicons.org/githubcopilot',
-                            'restassured': 'https://cdn.simpleicons.org/restassured',
+                            'restassured': 'https://cdn.simpleicons.org/restassured/00A651',
+                            'selenium': 'https://cdn.simpleicons.org/selenium/43B02A',
+                            'webdriverio': 'https://cdn.jsdelivr.net/npm/devicon@2.15.1/icons/webdriverio/webdriverio-plain.svg',
+                            'cucumber': 'https://cdn.jsdelivr.net/npm/devicon@2.15.1/icons/cucumber/cucumber-plain.svg',
+                            'java': 'https://cdn.jsdelivr.net/npm/devicon@2.15.1/icons/java/java-original.svg',
+                            'javascript': 'https://cdn.jsdelivr.net/npm/devicon@2.15.1/icons/javascript/javascript-original.svg',
+                            'nodejs': 'https://cdn.jsdelivr.net/npm/devicon@2.15.1/icons/nodejs/nodejs-original.svg',
+                            'git': 'https://cdn.jsdelivr.net/npm/devicon@2.15.1/icons/git/git-original.svg',
+                            'apachemaven': 'https://cdn.jsdelivr.net/npm/devicon@2.15.1/icons/apachemaven/apachemaven-original.svg',
+                            'postman': 'https://cdn.jsdelivr.net/npm/devicon@2.15.1/icons/postman/postman-original.svg',
+                            'jira': 'https://cdn.jsdelivr.net/npm/devicon@2.15.1/icons/jira/jira-original.svg',
+                            'mysql': 'https://cdn.jsdelivr.net/npm/devicon@2.15.1/icons/mysql/mysql-original.svg',
+                            'perforce': 'https://cdn.jsdelivr.net/npm/devicon@2.15.1/icons/perforce/perforce-original.svg',
                           };
-                          const key = primary.includes('githubcopilot')
-                            ? 'githubcopilot'
-                            : primary.includes('restassured')
-                            ? 'restassured'
-                            : '';
+                          const key = Object.keys(fallbacks).find(k => primary.includes(k)) ?? '';
                           return (
                             <img
                               src={primary}
