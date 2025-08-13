@@ -171,12 +171,13 @@ const Portfolio: React.FC = () => {
             </a>
             
             <nav className="relative z-50">
-              <ul className={`mobile-nav-menu flex gap-8 max-md:${isMobileMenuOpen ? 'flex' : 'hidden'} max-md:fixed max-md:top-[72px] max-md:left-0 max-md:right-0 max-md:flex-col max-md:p-4 max-md:border-t max-md:shadow-lg max-md:backdrop-blur-sm max-md:overflow-hidden`}
+              <ul className={`mobile-nav-menu flex gap-8 max-md:${isMobileMenuOpen ? 'flex' : 'hidden'} max-md:fixed max-md:top-[72px] max-md:left-0 max-md:right-0 max-md:h-[calc(100vh-72px)] max-md:flex-col max-md:p-4 max-md:border-t max-md:shadow-lg max-md:backdrop-blur-sm`}
                   style={{ 
                     backgroundColor: 'var(--surface-color)',
                     borderColor: 'var(--border-color)',
-                    maxHeight: isMobileMenuOpen ? '100vh' : '0',
-                    transition: 'max-height 0.3s ease-in-out'
+                    opacity: isMobileMenuOpen ? '1' : '0',
+                    visibility: isMobileMenuOpen ? 'visible' : 'hidden',
+                    transition: 'opacity 0.3s ease-in-out, visibility 0.3s ease-in-out'
                   }}>
                 {navLinks.map(link => (
                   <li key={link.id}>
@@ -206,7 +207,7 @@ const Portfolio: React.FC = () => {
               </ul>
             </nav>
 
-            <div className="theme-dropdown-container relative hidden md:block">
+            <div className="theme-dropdown-container relative">
               <button
                 className="theme-dropdown-trigger flex items-center gap-2 px-4 py-2 border rounded-lg transition-all duration-300"
                 style={{
