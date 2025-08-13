@@ -82,14 +82,40 @@ const Portfolio: React.FC = () => {
   useEffect(() => {
     const loadRecs = async () => {
       try {
-        const res = await fetch('/portfolio/assets/recommendations.json', {
-          headers: { 'Cache-Control': 'no-cache' }
-        });
+        const sheetId = (import.meta as any)?.env?.VITE_RECOMMENDATIONS_SHEET_ID as string | undefined;
+        if (sheetId) {
+          // Try Google Sheets first (publish sheet to web). Expected columns:
+          // name | role | relationship | text | date | linkedinUrl | avatar
+          const gvizUrl = `https://docs.google.com/spreadsheets/d/${sheetId}/gviz/tq?tqx=out:json&tq=${encodeURIComponent('select *')}`;
+          const text = await fetch(gvizUrl, { cache: 'no-store' }).then(r => r.text());
+          const jsonStr = text.replace(/^.*setResponse\(/, '').replace(/\);\s*$/, '');
+          const g = JSON.parse(jsonStr);
+          const rows = (g.table?.rows || []) as any[];
+          const mapped: Recommendation[] = rows.map((r) => {
+            const c = r.c || [];
+            return {
+              name: c[0]?.v?.toString?.() || '',
+              role: c[1]?.v?.toString?.() || '',
+              relationship: c[2]?.v?.toString?.() || '',
+              text: c[3]?.v?.toString?.() || '',
+              date: c[4]?.v?.toString?.() || '',
+              linkedinUrl: c[5]?.v?.toString?.() || '',
+              avatar: c[6]?.v?.toString?.() || undefined,
+            } as Recommendation;
+          }).filter(r => r.name && r.text && r.linkedinUrl);
+          if (mapped.length) {
+            setRecommendations(mapped);
+            return;
+          }
+        }
+
+        // Fallback to static JSON file
+        const base = (import.meta as any)?.env?.BASE_URL ?? '/';
+        const url = `${base}assets/recommendations.json?t=${Date.now()}`;
+        const res = await fetch(url, { cache: 'no-store' });
         if (res.ok) {
           const json = await res.json();
-          if (Array.isArray(json)) {
-            setRecommendations(json as Recommendation[]);
-          }
+          if (Array.isArray(json)) setRecommendations(json as Recommendation[]);
         }
       } catch (e) {
         // ignore network errors; section will show local/static items only
@@ -164,7 +190,8 @@ const Portfolio: React.FC = () => {
   };
 
   const downloadResume = () => {
-    const resumePath = '/portfolio/assets/VimalKumarYadav-Resume.pdf';
+    const base = (import.meta as any)?.env?.BASE_URL ?? '/';
+    const resumePath = `${base}assets/VimalKumarYadav-Resume.pdf`;
     const link = document.createElement('a');
     link.href = resumePath;
     link.download = 'VimalKumarYadav-Resume.pdf';
