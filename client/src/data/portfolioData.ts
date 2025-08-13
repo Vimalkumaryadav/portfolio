@@ -66,7 +66,7 @@ export const portfolioData = {
     ],
     "Tools & Technologies": [
   { name: "Git", icon: "img:https://unpkg.com/devicon@2.15.1/icons/git/git-original.svg" },
-  { name: "Maven", icon: "img:https://user-images.githubusercontent.com/33158051/103466428-2bd48f00-4d13-11eb-8d30-4602a442bfad.png" },
+  { name: "Maven", icon: "img:https://icons-for-free.com/iff/png/256/vscode+icons+type+maven-1324451386617447973.png" },
   { name: "Postman", icon: "img:https://w7.pngwing.com/pngs/28/245/png-transparent-postman-hd-logo-thumbnail.png" },
   { name: "JIRA", icon: "img:https://unpkg.com/devicon@2.15.1/icons/jira/jira-original.svg" },
   { name: "SQL", icon: "img:https://unpkg.com/devicon@2.15.1/icons/mysql/mysql-original.svg" },
