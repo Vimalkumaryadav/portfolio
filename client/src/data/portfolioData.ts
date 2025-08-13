@@ -70,7 +70,8 @@ export const portfolioData = {
       { name: "Postman", icon: "fas fa-satellite-dish" },
       { name: "JIRA", icon: "devicon-jira-plain colored" },
       { name: "SQL", icon: "devicon-mysql-plain colored" },
-      { name: "Perforce", icon: "fas fa-code-branch" }
+  { name: "Perforce", icon: "fas fa-code-branch" },
+  { name: "GitHub Copilot", icon: "fas fa-wand-magic-sparkles" }
     ]
   },
   
