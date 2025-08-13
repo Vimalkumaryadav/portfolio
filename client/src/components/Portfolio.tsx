@@ -206,7 +206,7 @@ const Portfolio: React.FC = () => {
               </ul>
             </nav>
 
-            <div className="theme-dropdown-container relative">
+            <div className="theme-dropdown-container relative hidden md:block">
               <button
                 className="theme-dropdown-trigger flex items-center gap-2 px-4 py-2 border rounded-lg transition-all duration-300"
                 style={{
