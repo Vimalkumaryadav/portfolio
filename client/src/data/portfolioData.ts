@@ -82,4 +82,21 @@ export const portfolioData = {
   },
   
   languages: ["Hindi", "English", "Telugu"]
+  ,
+  // LinkedIn recommendations shown on the site. These are optionally
+  // augmented at runtime from /portfolio/assets/recommendations.json.
+  // Each item shape:
+  // {
+  //   name: string,
+  //   role: string,            // e.g., "Manager at Company"
+  //   relationship: string,    // e.g., "Managed me directly"
+  //   text: string,            // the recommendation text
+  //   date: string,            // e.g., "Aug 2024"
+  //   linkedinUrl: string,     // direct link to the recommendation or profile
+  //   avatar?: string          // optional image URL
+  // }
+  recommendations: [
+    // Add any existing recommendation entries here. You can also manage them
+    // via client/public/assets/recommendations.json without rebuilding.
+  ]
 };

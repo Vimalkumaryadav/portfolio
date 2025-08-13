@@ -1,9 +1,19 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { useTheme } from './ThemeProvider';
 import { portfolioData } from '../data/portfolioData';
 import { useAnalytics } from '../hooks/useAnalytics';
 
 type Theme = 'light' | 'dark' | 'blue' | 'purple' | 'green' | 'orange';
+
+type Recommendation = {
+  name: string;
+  role: string;
+  relationship: string;
+  text: string;
+  date: string;
+  linkedinUrl: string;
+  avatar?: string;
+};
 
 const Portfolio: React.FC = () => {
   const { theme, setTheme } = useTheme();
@@ -13,6 +23,7 @@ const Portfolio: React.FC = () => {
   const [scrollProgress, setScrollProgress] = useState(0);
   const [isHeaderScrolled, setIsHeaderScrolled] = useState(false);
   const [isThemeDropdownOpen, setIsThemeDropdownOpen] = useState(false);
+  const [recommendations, setRecommendations] = useState<Recommendation[]>([]);
 
   // Track initial page view
   useEffect(() => {
@@ -26,7 +37,7 @@ const Portfolio: React.FC = () => {
       setIsHeaderScrolled(window.scrollY > 100);
       
       // Update active section
-      const sections = ['home', 'about', 'experience', 'skills', 'education', 'contact'];
+  const sections = ['home', 'about', 'experience', 'skills', 'education', 'recommendations', 'contact'];
       let current = 'home';
       
       for (const sectionId of sections) {
@@ -56,6 +67,32 @@ const Portfolio: React.FC = () => {
       document.removeEventListener('click', handleClickOutside);
     };
   }, [isThemeDropdownOpen]);
+
+  // Fetch recommendations from public assets and merge with any bundled ones
+  useEffect(() => {
+    const loadRecs = async () => {
+      try {
+        const res = await fetch('/portfolio/assets/recommendations.json', {
+          headers: { 'Cache-Control': 'no-cache' }
+        });
+        if (res.ok) {
+          const json = await res.json();
+          if (Array.isArray(json)) {
+            setRecommendations(json as Recommendation[]);
+          }
+        }
+      } catch (e) {
+        // ignore network errors; section will show local/static items only
+      }
+    };
+    loadRecs();
+  }, []);
+
+  const allRecommendations: Recommendation[] = useMemo(() => {
+    // Merge static recommendations from portfolioData with fetched ones
+    const staticRecs = (portfolioData as any).recommendations || [];
+    return [...staticRecs, ...recommendations];
+  }, [recommendations]);
 
   useEffect(() => {
     // Add click outside handler to close mobile menu
@@ -135,6 +172,7 @@ const Portfolio: React.FC = () => {
     { id: 'experience', label: 'Experience' },
     { id: 'skills', label: 'Skills' },
     { id: 'education', label: 'Education' },
+  { id: 'recommendations', label: 'Recommendations' },
     { id: 'contact', label: 'Contact' }
   ];
 
@@ -537,6 +575,85 @@ const Portfolio: React.FC = () => {
             <p className="text-lg font-medium mb-2">{portfolioData.education.institution}</p>
             <p style={{ color: 'var(--text-secondary)' }}>{portfolioData.education.period}</p>
           </div>
+        </div>
+      </section>
+
+      {/* Recommendations Section */}
+      <section id="recommendations" className="section">
+        <div className="max-w-6xl mx-auto px-8">
+          <h2 className="text-4xl font-bold text-center mb-12 fade-in" style={{ color: 'var(--primary-color)' }}>
+            LinkedIn Recommendations
+          </h2>
+
+          {allRecommendations.length === 0 ? (
+            <div 
+              className="max-w-3xl mx-auto p-8 rounded-2xl text-center fade-in"
+              style={{ backgroundColor: 'var(--surface-color)', boxShadow: 'var(--shadow)' }}
+            >
+              <p className="text-lg" style={{ color: 'var(--text-secondary)' }}>
+                No public recommendations available yet. Check my profile on LinkedIn.
+              </p>
+              <a
+                href={portfolioData.personal.linkedin + 'details/recommendations/'}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 mt-4 px-4 py-2 rounded-lg border"
+                style={{ color: 'var(--primary-color)', borderColor: 'var(--primary-color)' }}
+                onClick={() => trackEvent('outbound', 'linkedin-recommendations', 'profile')}
+              >
+                <i className="fab fa-linkedin" /> View on LinkedIn
+              </a>
+            </div>
+          ) : (
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-5xl mx-auto">
+              {allRecommendations.map((rec, idx) => (
+                <div
+                  key={`${rec.name}-${idx}`}
+                  className="p-6 rounded-2xl fade-in h-full flex flex-col"
+                  style={{ backgroundColor: 'var(--surface-color)', boxShadow: 'var(--shadow)' }}
+                >
+                  <div className="flex items-center gap-4 mb-4">
+                    <div
+                      className="w-12 h-12 rounded-full flex items-center justify-center border-2 overflow-hidden"
+                      style={{ borderColor: 'var(--primary-color)' }}
+                      aria-hidden="true"
+                    >
+                      {rec.avatar ? (
+                        <img src={rec.avatar} alt={rec.name} className="w-full h-full object-cover" />
+                      ) : (
+                        <span className="font-semibold" style={{ color: 'var(--primary-color)' }}>
+                          {rec.name.split(' ').map(p => p[0]).slice(0,2).join('')}
+                        </span>
+                      )}
+                    </div>
+                    <div className="min-w-0">
+                      <p className="font-semibold" style={{ color: 'var(--text-primary)' }}>{rec.name}</p>
+                      <p className="text-sm" style={{ color: 'var(--text-secondary)' }}>{rec.role}</p>
+                      <p className="text-xs" style={{ color: 'var(--text-secondary)' }}>{rec.relationship} • {rec.date}</p>
+                    </div>
+                  </div>
+
+                  <div className="flex-1">
+                    <i className="fas fa-quote-left mr-2" style={{ color: 'var(--primary-color)' }} />
+                    <span style={{ color: 'var(--text-secondary)' }}>{rec.text}</span>
+                  </div>
+
+                  <div className="mt-4 flex items-center justify-between">
+                    <a
+                      href={rec.linkedinUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-2 text-sm font-medium"
+                      style={{ color: 'var(--primary-color)' }}
+                      onClick={() => trackEvent('outbound', 'linkedin-recommendation', rec.name)}
+                    >
+                      <i className="fab fa-linkedin" /> View on LinkedIn
+                    </a>
+                  </div>
+                </div>
+              ))}
+            </div>
+          )}
         </div>
       </section>
 
