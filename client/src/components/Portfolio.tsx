@@ -110,11 +110,21 @@ const Portfolio: React.FC = () => {
         }
 
         // Fallback to static JSON file — try multiple safe paths
+        const basePath = (document.querySelector('base')?.getAttribute('href')
+          || (import.meta as any)?.env?.BASE_URL
+          || '/');
+        const normalizedBase = basePath.endsWith('/') ? basePath : `${basePath}/`;
+        const baseAbs = new URL(normalizedBase, window.location.origin).toString();
+        const ts = Date.now();
         const candidates = [
-          `assets/recommendations.json?t=${Date.now()}`,
-          `${(import.meta as any)?.env?.BASE_URL ?? '/'}assets/recommendations.json?t=${Date.now()}`,
-          `/assets/recommendations.json?t=${Date.now()}`,
-          `/portfolio/assets/recommendations.json?t=${Date.now()}`,
+          // relative to current path
+          `assets/recommendations.json?t=${ts}`,
+          // absolute using document base
+          new URL(`assets/recommendations.json?t=${ts}`, baseAbs).toString(),
+          // absolute root
+          `/assets/recommendations.json?t=${ts}`,
+          // explicit GitHub Pages project base (common for your setup)
+          `/portfolio/assets/recommendations.json?t=${ts}`,
         ];
         for (const url of candidates) {
           try {
