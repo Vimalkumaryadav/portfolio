@@ -62,7 +62,7 @@ export const portfolioData = {
       { name: "Selenium", icon: "si:selenium" },
       { name: "WebDriverIO", icon: "si:webdriverio" },
       { name: "Cucumber BDD", icon: "si:cucumber" },
-      { name: "Rest Assured", icon: "si:java" }
+  { name: "Rest Assured", icon: "si:restassured" }
     ],
     "Tools & Technologies": [
       { name: "Git", icon: "si:git" },

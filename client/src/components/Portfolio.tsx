@@ -624,13 +624,26 @@ const Portfolio: React.FC = () => {
                         }
                         if (iconVal.startsWith('si:')) {
                           const slug = iconVal.slice(3);
-                          const src = `https://cdn.simpleicons.org/${slug}`;
+                          // Simple Icons default to black; switch to white on non-light themes for contrast
+                          const isLight = theme === 'light';
+                          const colorHex = isLight ? '000000' : 'ffffff';
+                          const src = `https://cdn.simpleicons.org/${slug}/${colorHex}`;
                           return (
                             <img
                               src={src}
                               alt={String((skill as any).name)}
                               className="w-5 h-5"
                               loading="lazy"
+                              onError={(e) => {
+                                const img = e.currentTarget as HTMLImageElement & { dataset: { triedNoColor?: string } };
+                                if (!img.dataset.triedNoColor) {
+                                  img.dataset.triedNoColor = '1';
+                                  img.src = `https://cdn.simpleicons.org/${slug}`; // retry default color
+                                } else {
+                                  // hide broken icon, label still shows
+                                  img.style.display = 'none';
+                                }
+                              }}
                             />
                           );
                         }
