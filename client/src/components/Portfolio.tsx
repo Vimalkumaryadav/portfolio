@@ -153,6 +153,15 @@ const Portfolio: React.FC = () => {
     return [...staticRecs, ...recommendations];
   }, [recommendations]);
 
+  // Make sure newly rendered elements (like async recommendations) become visible
+  useEffect(() => {
+    if (allRecommendations.length > 0) {
+      document
+        .querySelectorAll('#recommendations .fade-in')
+        .forEach((el) => el.classList.add('active'));
+    }
+  }, [allRecommendations.length]);
+
   useEffect(() => {
     // Add click outside handler to close mobile menu
     const handleClickOutside = (event: MouseEvent) => {
