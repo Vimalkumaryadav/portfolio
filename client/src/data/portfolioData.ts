@@ -71,7 +71,7 @@ export const portfolioData = {
       { name: "JIRA", icon: "devicon-jira-plain colored" },
       { name: "SQL", icon: "devicon-mysql-plain colored" },
   { name: "Perforce", icon: "fas fa-code-branch" },
-  { name: "GitHub Copilot", icon: "fas fa-wand-magic-sparkles" }
+  { name: "GitHub Copilot", icon: "img:https://raw.githubusercontent.com/github/explore/main/topics/copilot/copilot.png" }
     ]
   },
   

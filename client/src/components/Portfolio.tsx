@@ -610,10 +610,19 @@ const Portfolio: React.FC = () => {
                         e.currentTarget.style.borderColor = 'var(--border-color)';
                       }}
                     >
-                      <i 
-                        className={`${skill.icon} text-xl`}
-                        style={{ color: 'var(--primary-color)' }}
-                      />
+                      {String((skill as any).icon).startsWith('img:') ? (
+                        <img
+                          src={String((skill as any).icon).slice(4)}
+                          alt={String((skill as any).name)}
+                          className="w-5 h-5"
+                          loading="lazy"
+                        />
+                      ) : (
+                        <i
+                          className={`${(skill as any).icon} text-xl`}
+                          style={{ color: 'var(--primary-color)' }}
+                        />
+                      )}
                       <span>{skill.name}</span>
                     </div>
                   ))}
