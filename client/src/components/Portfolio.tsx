@@ -3,7 +3,7 @@ import { useTheme } from './ThemeProvider';
 import { portfolioData } from '../data/portfolioData';
 import { useAnalytics } from '../hooks/useAnalytics';
 
-type Theme = 'light' | 'dark';
+// Theme type comes from ThemeProvider; we only toggle between 'light' and 'dark'
 
 type Recommendation = {
   name: string;
@@ -22,7 +22,7 @@ const Portfolio: React.FC = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [scrollProgress, setScrollProgress] = useState(0);
   const [isHeaderScrolled, setIsHeaderScrolled] = useState(false);
-  const [isThemeDropdownOpen, setIsThemeDropdownOpen] = useState(false);
+  // theme dropdown removed; using a simple Day/Night toggle instead
   const [recommendations, setRecommendations] = useState<Recommendation[]>([]);
   const [isSmallScreen, setIsSmallScreen] = useState(false);
 
@@ -53,21 +53,13 @@ const Portfolio: React.FC = () => {
       setActiveSection(current);
     };
 
-    const handleClickOutside = (event: MouseEvent) => {
-      if (isThemeDropdownOpen && !(event.target as Element).closest('.theme-dropdown-container')) {
-        setIsThemeDropdownOpen(false);
-      }
-    };
-
     window.addEventListener('scroll', handleScroll);
-    document.addEventListener('click', handleClickOutside);
     handleScroll();
 
     return () => {
       window.removeEventListener('scroll', handleScroll);
-      document.removeEventListener('click', handleClickOutside);
     };
-  }, [isThemeDropdownOpen]);
+  }, []);
 
   // Track viewport to scope mobile-only menu animations/visibility
   useEffect(() => {
@@ -245,10 +237,7 @@ const Portfolio: React.FC = () => {
     { id: 'contact', label: 'Contact' }
   ];
 
-  const themeOptions = [
-    { theme: 'light' as Theme, label: 'Day', color: '#3b82f6' },
-    { theme: 'dark' as Theme, label: 'Night', color: '#1f2937' }
-  ];
+  const isDark = theme === 'dark';
 
   return (
     <div>
@@ -310,72 +299,35 @@ const Portfolio: React.FC = () => {
               </ul>
             </nav>
 
-            <div className="theme-dropdown-container relative">
+            <div className="relative">
               <button
-                className="theme-dropdown-trigger flex items-center gap-2 px-4 py-2 border rounded-lg transition-all duration-300"
+                aria-label={isDark ? 'Switch to Day' : 'Switch to Night'}
+                className="flex items-center gap-2 px-4 py-2 border rounded-lg transition-all duration-300"
                 style={{
                   borderColor: 'var(--border-color)',
                   backgroundColor: 'var(--surface-color)',
                   color: 'var(--text-primary)'
                 }}
-                onClick={() => setIsThemeDropdownOpen(!isThemeDropdownOpen)}
+                onClick={() => setTheme(isDark ? 'light' : 'dark')}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.boxShadow = 'var(--shadow)';
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.boxShadow = 'none';
+                }}
               >
                 <div 
                   className="w-4 h-4 rounded-full border-2"
                   style={{
-                    backgroundColor: themeOptions.find(opt => opt.theme === theme)?.color,
+                    backgroundColor: isDark ? '#1f2937' : '#3b82f6',
                     borderColor: 'var(--border-color)'
                   }}
                 />
                 <span className="text-sm font-medium">
-                  {themeOptions.find(opt => opt.theme === theme)?.label}
+                  {isDark ? 'Night' : 'Day'}
                 </span>
-                <i className={`fas fa-chevron-${isThemeDropdownOpen ? 'up' : 'down'} text-xs`} />
+                <i className={isDark ? 'fas fa-moon text-xs' : 'fas fa-sun text-xs'} />
               </button>
-              
-              {isThemeDropdownOpen && (
-                <div 
-                  className="theme-dropdown-menu absolute top-full right-0 mt-2 py-2 rounded-lg border shadow-lg min-w-48 z-50"
-                  style={{
-                    backgroundColor: 'var(--surface-color)',
-                    borderColor: 'var(--border-color)',
-                    boxShadow: 'var(--shadow-lg)'
-                  }}
-                >
-                  {themeOptions.map((option) => (
-                    <button
-                      key={option.theme}
-                      className="w-full flex items-center gap-3 px-4 py-2 text-left hover:bg-opacity-10 transition-all duration-200"
-                      style={{
-                        color: 'var(--text-primary)',
-                        backgroundColor: theme === option.theme ? `${option.color}15` : 'transparent'
-                      }}
-                      onClick={() => {
-                        setTheme(option.theme);
-                        setIsThemeDropdownOpen(false);
-                      }}
-                      onMouseEnter={(e) => {
-                        e.currentTarget.style.backgroundColor = `${option.color}10`;
-                      }}
-                      onMouseLeave={(e) => {
-                        e.currentTarget.style.backgroundColor = theme === option.theme ? `${option.color}15` : 'transparent';
-                      }}
-                    >
-                      <div 
-                        className="w-4 h-4 rounded-full border-2"
-                        style={{
-                          backgroundColor: option.color,
-                          borderColor: 'var(--border-color)'
-                        }}
-                      />
-                      <span className="text-sm font-medium">{option.label}</span>
-                      {theme === option.theme && (
-                        <i className="fas fa-check ml-auto text-xs" style={{ color: option.color }} />
-                      )}
-                    </button>
-                  ))}
-                </div>
-              )}
             </div>
 
             <button
