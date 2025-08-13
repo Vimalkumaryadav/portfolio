@@ -3,7 +3,7 @@ import { useTheme } from './ThemeProvider';
 import { portfolioData } from '../data/portfolioData';
 import { useAnalytics } from '../hooks/useAnalytics';
 
-type Theme = 'light' | 'dark' | 'blue' | 'purple' | 'green' | 'orange';
+type Theme = 'light' | 'dark';
 
 type Recommendation = {
   name: string;
@@ -246,12 +246,8 @@ const Portfolio: React.FC = () => {
   ];
 
   const themeOptions = [
-    { theme: 'light' as Theme, label: 'Light Mode', color: '#3b82f6' },
-    { theme: 'dark' as Theme, label: 'Dark Mode', color: '#1f2937' },
-    { theme: 'blue' as Theme, label: 'Blue Professional', color: '#1e40af' },
-    { theme: 'purple' as Theme, label: 'Purple Creative', color: '#8b5cf6' },
-    { theme: 'green' as Theme, label: 'Green Nature', color: '#22c55e' },
-    { theme: 'orange' as Theme, label: 'Orange Energy', color: '#f97316' }
+    { theme: 'light' as Theme, label: 'Day', color: '#3b82f6' },
+    { theme: 'dark' as Theme, label: 'Night', color: '#1f2937' }
   ];
 
   return (
