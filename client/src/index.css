@@ -80,8 +80,7 @@
 
 /* Dark-only polish */
 [data-theme="dark"] .header {
-  background-color: rgba(20, 26, 32, 0.75); /* translucent surface */
-  backdrop-filter: saturate(1.2) blur(8px);
+  background-color: var(--surface-color); /* solid header in dark */
 }
 
 [data-theme="dark"] .section:nth-child(even) {

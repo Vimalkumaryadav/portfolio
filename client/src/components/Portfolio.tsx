@@ -263,14 +263,18 @@ const Portfolio: React.FC = () => {
             </a>
             
             <nav className="relative z-50">
-      <ul className={`mobile-nav-menu flex gap-8 max-md:${isMobileMenuOpen ? 'flex' : 'hidden'} max-md:fixed max-md:top-[72px] max-md:left-0 max-md:right-0 max-md:h-[calc(100vh-72px)] max-md:flex-col max-md:p-4 max-md:border-t max-md:shadow-lg max-md:backdrop-blur-sm`}
-                  style={{ 
-                    backgroundColor: 'var(--surface-color)',
-                    borderColor: 'var(--border-color)',
-        opacity: isSmallScreen ? (isMobileMenuOpen ? '1' : '0') : '1',
-        visibility: isSmallScreen ? (isMobileMenuOpen ? 'visible' : 'hidden') : 'visible',
-                    transition: 'opacity 0.3s ease-in-out, visibility 0.3s ease-in-out'
-                  }}>
+      <ul
+                className={`mobile-nav-menu flex gap-8 max-md:${isMobileMenuOpen ? 'flex' : 'hidden'} max-md:fixed max-md:top-[72px] max-md:left-0 max-md:right-0 max-md:h-[calc(100vh-72px)] max-md:flex-col max-md:p-4 max-md:border-t`}
+                style={{
+                  backgroundColor: isSmallScreen ? 'var(--surface-color)' : 'transparent',
+                  borderColor: isSmallScreen ? 'var(--border-color)' : 'transparent',
+                  boxShadow: isSmallScreen ? 'var(--shadow-lg)' : 'none',
+                  backdropFilter: isSmallScreen ? 'saturate(1.2) blur(8px)' : 'none',
+                  opacity: isSmallScreen ? (isMobileMenuOpen ? '1' : '0') : '1',
+                  visibility: isSmallScreen ? (isMobileMenuOpen ? 'visible' : 'hidden') : 'visible',
+                  transition: 'opacity 0.3s ease-in-out, visibility 0.3s ease-in-out'
+                }}
+              >
                 {navLinks.map(link => (
                   <li key={link.id}>
                     <a
