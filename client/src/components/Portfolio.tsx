@@ -614,22 +614,64 @@ const Portfolio: React.FC = () => {
                         const iconVal = String((skill as any).icon);
                         if (iconVal.startsWith('img:')) {
                           const primary = iconVal.slice(4);
-                          // Provide a generic fallback map for common tools if primary fails
-                          const fallbacks: Record<string, string> = {
-                            'githubcopilot': 'https://cdn.simpleicons.org/githubcopilot',
-                            'restassured': 'https://cdn.simpleicons.org/restassured/00A651',
-                            'selenium': 'https://cdn.simpleicons.org/selenium/43B02A',
-                            'webdriverio': 'https://cdn.jsdelivr.net/npm/devicon@2.15.1/icons/webdriverio/webdriverio-plain.svg',
-                            'cucumber': 'https://cdn.jsdelivr.net/npm/devicon@2.15.1/icons/cucumber/cucumber-plain.svg',
-                            'java': 'https://cdn.jsdelivr.net/npm/devicon@2.15.1/icons/java/java-original.svg',
-                            'javascript': 'https://cdn.jsdelivr.net/npm/devicon@2.15.1/icons/javascript/javascript-original.svg',
-                            'nodejs': 'https://cdn.jsdelivr.net/npm/devicon@2.15.1/icons/nodejs/nodejs-original.svg',
-                            'git': 'https://cdn.jsdelivr.net/npm/devicon@2.15.1/icons/git/git-original.svg',
-                            'apachemaven': 'https://cdn.jsdelivr.net/npm/devicon@2.15.1/icons/apachemaven/apachemaven-original.svg',
-                            'postman': 'https://cdn.jsdelivr.net/npm/devicon@2.15.1/icons/postman/postman-original.svg',
-                            'jira': 'https://cdn.jsdelivr.net/npm/devicon@2.15.1/icons/jira/jira-original.svg',
-                            'mysql': 'https://cdn.jsdelivr.net/npm/devicon@2.15.1/icons/mysql/mysql-original.svg',
-                            'perforce': 'https://cdn.jsdelivr.net/npm/devicon@2.15.1/icons/perforce/perforce-original.svg',
+                          // Alternate URLs to try per icon key
+                          const fallbacks: Record<string, string[]> = {
+                            githubcopilot: [
+                              'https://cdn.simpleicons.org/githubcopilot',
+                              'https://skillicons.dev/icons?i=githubcopilot'
+                            ],
+                            restassured: [
+                              'https://cdn.simpleicons.org/restassured/00A651',
+                              'https://cdn.simpleicons.org/restassured'
+                            ],
+                            selenium: [
+                              'https://cdn.simpleicons.org/selenium/43B02A',
+                              'https://cdn.simpleicons.org/selenium'
+                            ],
+                            webdriverio: [
+                              'https://unpkg.com/devicon@2.15.1/icons/webdriverio/webdriverio-original.svg',
+                              'https://cdn.jsdelivr.net/npm/devicon@2.15.1/icons/webdriverio/webdriverio-original.svg'
+                            ],
+                            cucumber: [
+                              'https://unpkg.com/devicon@2.15.1/icons/cucumber/cucumber-plain.svg',
+                              'https://cdn.jsdelivr.net/npm/devicon@2.15.1/icons/cucumber/cucumber-plain.svg'
+                            ],
+                            java: [
+                              'https://unpkg.com/devicon@2.15.1/icons/java/java-original.svg',
+                              'https://cdn.jsdelivr.net/npm/devicon@2.15.1/icons/java/java-original.svg'
+                            ],
+                            javascript: [
+                              'https://unpkg.com/devicon@2.15.1/icons/javascript/javascript-original.svg',
+                              'https://cdn.jsdelivr.net/npm/devicon@2.15.1/icons/javascript/javascript-original.svg'
+                            ],
+                            nodejs: [
+                              'https://unpkg.com/devicon@2.15.1/icons/nodejs/nodejs-original.svg',
+                              'https://cdn.jsdelivr.net/npm/devicon@2.15.1/icons/nodejs/nodejs-original.svg'
+                            ],
+                            git: [
+                              'https://unpkg.com/devicon@2.15.1/icons/git/git-original.svg',
+                              'https://cdn.jsdelivr.net/npm/devicon@2.15.1/icons/git/git-original.svg'
+                            ],
+                            apachemaven: [
+                              'https://unpkg.com/devicon@2.15.1/icons/apachemaven/apachemaven-original.svg',
+                              'https://cdn.jsdelivr.net/npm/devicon@2.15.1/icons/apachemaven/apachemaven-original.svg'
+                            ],
+                            postman: [
+                              'https://unpkg.com/devicon@2.15.1/icons/postman/postman-original.svg',
+                              'https://cdn.jsdelivr.net/npm/devicon@2.15.1/icons/postman/postman-original.svg'
+                            ],
+                            jira: [
+                              'https://unpkg.com/devicon@2.15.1/icons/jira/jira-original.svg',
+                              'https://cdn.jsdelivr.net/npm/devicon@2.15.1/icons/jira/jira-original.svg'
+                            ],
+                            mysql: [
+                              'https://unpkg.com/devicon@2.15.1/icons/mysql/mysql-original.svg',
+                              'https://cdn.jsdelivr.net/npm/devicon@2.15.1/icons/mysql/mysql-original.svg'
+                            ],
+                            perforce: [
+                              'https://unpkg.com/devicon@2.15.1/icons/perforce/perforce-original.svg',
+                              'https://cdn.jsdelivr.net/npm/devicon@2.15.1/icons/perforce/perforce-original.svg'
+                            ],
                           };
                           const key = Object.keys(fallbacks).find(k => primary.includes(k)) ?? '';
                           return (
@@ -639,10 +681,12 @@ const Portfolio: React.FC = () => {
                               className="w-5 h-5"
                               loading="lazy"
                               onError={(e) => {
-                                const img = e.currentTarget as HTMLImageElement & { dataset: { tried?: string } };
-                                if (!img.dataset.tried && key && fallbacks[key]) {
-                                  img.dataset.tried = '1';
-                                  img.src = fallbacks[key];
+                                const img = e.currentTarget as HTMLImageElement & { dataset: { idx?: string } };
+                                const list = key ? fallbacks[key] : [];
+                                const nextIdx = ((img.dataset.idx ? parseInt(img.dataset.idx, 10) : -1) + 1);
+                                if (key && list[nextIdx]) {
+                                  img.dataset.idx = String(nextIdx);
+                                  img.src = list[nextIdx];
                                 } else {
                                   img.style.display = 'none';
                                 }
