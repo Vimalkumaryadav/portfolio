@@ -610,19 +610,37 @@ const Portfolio: React.FC = () => {
                         e.currentTarget.style.borderColor = 'var(--border-color)';
                       }}
                     >
-                      {String((skill as any).icon).startsWith('img:') ? (
-                        <img
-                          src={String((skill as any).icon).slice(4)}
-                          alt={String((skill as any).name)}
-                          className="w-5 h-5"
-                          loading="lazy"
-                        />
-                      ) : (
-                        <i
-                          className={`${(skill as any).icon} text-xl`}
-                          style={{ color: 'var(--primary-color)' }}
-                        />
-                      )}
+                      {(() => {
+                        const iconVal = String((skill as any).icon);
+                        if (iconVal.startsWith('img:')) {
+                          return (
+                            <img
+                              src={iconVal.slice(4)}
+                              alt={String((skill as any).name)}
+                              className="w-5 h-5"
+                              loading="lazy"
+                            />
+                          );
+                        }
+                        if (iconVal.startsWith('si:')) {
+                          const slug = iconVal.slice(3);
+                          const src = `https://cdn.simpleicons.org/${slug}`;
+                          return (
+                            <img
+                              src={src}
+                              alt={String((skill as any).name)}
+                              className="w-5 h-5"
+                              loading="lazy"
+                            />
+                          );
+                        }
+                        return (
+                          <i
+                            className={`${iconVal} text-xl`}
+                            style={{ color: 'var(--primary-color)' }}
+                          />
+                        );
+                      })()}
                       <span>{skill.name}</span>
                     </div>
                   ))}

@@ -54,24 +54,24 @@ export const portfolioData = {
   
   skills: {
     "Programming Languages": [
-      { name: "Java", icon: "devicon-java-plain colored" },
-      { name: "JavaScript", icon: "devicon-javascript-plain colored" },
-      { name: "Node.js", icon: "devicon-nodejs-plain colored" }
+      { name: "Java", icon: "si:java" },
+      { name: "JavaScript", icon: "si:javascript" },
+      { name: "Node.js", icon: "si:nodedotjs" }
     ],
     "Testing Frameworks": [
-      { name: "Selenium", icon: "fas fa-robot" },
-      { name: "WebDriverIO", icon: "fas fa-cogs" },
-      { name: "Cucumber BDD", icon: "fas fa-leaf" },
-      { name: "Rest Assured", icon: "fas fa-shield-alt" }
+      { name: "Selenium", icon: "si:selenium" },
+      { name: "WebDriverIO", icon: "si:webdriverio" },
+      { name: "Cucumber BDD", icon: "si:cucumber" },
+      { name: "Rest Assured", icon: "si:java" }
     ],
     "Tools & Technologies": [
-      { name: "Git", icon: "devicon-git-plain colored" },
-      { name: "Maven", icon: "fas fa-cube" },
-      { name: "Postman", icon: "fas fa-satellite-dish" },
-      { name: "JIRA", icon: "devicon-jira-plain colored" },
-      { name: "SQL", icon: "devicon-mysql-plain colored" },
-  { name: "Perforce", icon: "fas fa-code-branch" },
-  { name: "GitHub Copilot", icon: "img:https://raw.githubusercontent.com/github/explore/main/topics/copilot/copilot.png" }
+      { name: "Git", icon: "si:git" },
+      { name: "Maven", icon: "si:apachemaven" },
+      { name: "Postman", icon: "si:postman" },
+      { name: "JIRA", icon: "si:jira" },
+      { name: "SQL", icon: "si:mysql" },
+      { name: "Perforce", icon: "si:perforce" },
+      { name: "GitHub Copilot", icon: "si:githubcopilot" }
     ]
   },
   
