@@ -1,11 +1,20 @@
 [
-  {
-    "name": "Example Manager",
-    "role": "Engineering Manager, Electronic Arts",
+    {
+    "name": "Howard Behr",
+    "role": "CEO - LAPALOPA",
     "relationship": "Managed me directly",
-    "text": "Vimal is a highly reliable QA Automation Engineer who consistently delivers high-quality work and proactively improves test coverage and pipelines.",
-    "date": "Mar 2024",
+    "text": "Worked with Vimal over the past year as he did the QA for my startup's software development. He always did a great job both identifying the key issues and concerns while also proposing improvements that would enhance the end user's experience. I also appreciated that he was easy to work with, a strong and positive contributor during those tough meetings and discussions when it would have been less productive if he (or other team members) had been too combative.",
+    "date": "June 2020",
     "linkedinUrl": "https://www.linkedin.com/in/yadavvk/details/recommendations/",
-    "avatar": ""
+    "avatar": "https://media.licdn.com/dms/image/v2/D5603AQFGcwyyi6LR6Q/profile-displayphoto-shrink_100_100/profile-displayphoto-shrink_100_100/0/1683949864333?e=1758153600&v=beta&t=eac3ug7VZQkdDdw4qnEudUrP0bhvxPKDec75anKceIo"
+  },
+  {
+    "name": "Jo Cavill",
+    "role": "Laravel developer & DevOps Engineer",
+    "relationship": "Managed me directly",
+    "text": "I have found Vimal to be very creative and diligent in his work. Not only is he a very thorough tester, but he also goes above and beyond his duties to provide useful suggestions and feedback to help the team continually improve the product. I would highly recommend Vimal to anyone looking for a multi-skilled tester.",
+    "date": "June 2021",
+    "linkedinUrl": "https://www.linkedin.com/in/yadavvk/details/recommendations/",
+    "avatar": "https://media.licdn.com/dms/image/v2/C4D03AQHkfc0u7ufgWA/profile-displayphoto-shrink_100_100/profile-displayphoto-shrink_100_100/0/1587755707534?e=1758153600&v=beta&t=aXe5wAvFDdAdLWlKdegpysatbL1AJGJ2keqlLcT8ou0"
   }
 ]
