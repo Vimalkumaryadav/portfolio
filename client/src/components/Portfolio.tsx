@@ -278,18 +278,55 @@ const Portfolio: React.FC = () => {
     setIsMobileMenuOpen(false);
   };
 
-  const downloadResume = () => {
-    const base = (import.meta as any)?.env?.BASE_URL ?? '/';
-    const resumePath = `${base}assets/VimalKumarYadav-Resume.pdf`;
-    const link = document.createElement('a');
-    link.href = resumePath;
-    link.download = 'VimalKumarYadav-Resume.pdf';
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-    
-    // Track resume download event
-    trackEvent('download', 'resume', 'VimalKumarYadav-Resume.pdf');
+  const downloadResume = async () => {
+    try {
+      const basePath = (document.querySelector('base')?.getAttribute('href')
+        || (import.meta as any)?.env?.BASE_URL
+        || '/');
+      const normalizedBase = basePath.endsWith('/') ? basePath : `${basePath}/`;
+      const baseAbs = new URL(normalizedBase, window.location.origin).toString();
+
+      const filenames = [
+        'VimalKumarYadav-Resume.pdf',
+        'VimalKumarYadav-Resume_1754859839471.pdf'
+      ];
+      const candidates: { url: string; name: string }[] = [];
+      for (const name of filenames) {
+        candidates.push(
+          { url: `assets/${name}`, name },
+          { url: new URL(`assets/${name}`, baseAbs).toString(), name },
+          { url: `/assets/${name}`, name },
+          { url: `/portfolio/assets/${name}`, name },
+        );
+      }
+
+      let found: { url: string; name: string } | undefined;
+      for (const c of candidates) {
+        try {
+          const res = await fetch(c.url, { method: 'HEAD', cache: 'no-store' });
+          if (res.ok) { found = c; break; }
+        } catch {
+          // try next
+        }
+      }
+
+      if (!found) {
+        // As a last resort, attempt the primary path without HEAD check
+        found = { url: `${normalizedBase}assets/${filenames[0]}`, name: filenames[0] };
+      }
+
+      const link = document.createElement('a');
+      link.href = found.url;
+      link.download = found.name;
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+
+      trackEvent('download', 'resume', found.name);
+    } catch (e) {
+      trackEvent('error', 'resume-download', String(e));
+      alert('Resume file not found. Please try again later.');
+    }
   };
 
   const navLinks = [
