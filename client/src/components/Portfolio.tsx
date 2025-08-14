@@ -15,6 +15,14 @@ type Recommendation = {
   avatar?: string;
 };
 
+type Appreciation = {
+  title?: string;
+  from?: string;
+  date?: string;
+  description?: string;
+  image: string; // absolute or relative URL to the screenshot/image
+};
+
 const Portfolio: React.FC = () => {
   const { theme, setTheme } = useTheme();
   const { trackPageView, trackEvent } = useAnalytics();
@@ -24,6 +32,7 @@ const Portfolio: React.FC = () => {
   const [isHeaderScrolled, setIsHeaderScrolled] = useState(false);
   // theme dropdown removed; using a simple Day/Night toggle instead
   const [recommendations, setRecommendations] = useState<Recommendation[]>([]);
+  const [appreciations, setAppreciations] = useState<Appreciation[]>([]);
   const [isSmallScreen, setIsSmallScreen] = useState(false);
 
   // Track initial page view
@@ -38,7 +47,7 @@ const Portfolio: React.FC = () => {
       setIsHeaderScrolled(window.scrollY > 100);
       
       // Update active section
-  const sections = ['home', 'about', 'experience', 'skills', 'education', 'recommendations', 'contact'];
+  const sections = ['home', 'about', 'experience', 'skills', 'education', 'appreciations', 'recommendations', 'contact'];
       let current = 'home';
       
       for (const sectionId of sections) {
@@ -139,6 +148,77 @@ const Portfolio: React.FC = () => {
     loadRecs();
   }, []);
 
+  // Fetch appreciations from public assets with robust fallbacks
+  useEffect(() => {
+    const loadAppreciations = async () => {
+      try {
+        const basePath = (document.querySelector('base')?.getAttribute('href')
+          || (import.meta as any)?.env?.BASE_URL
+          || '/');
+        const normalizedBase = basePath.endsWith('/') ? basePath : `${basePath}/`;
+        const baseAbs = new URL(normalizedBase, window.location.origin).toString();
+        const ts = Date.now();
+
+        // 1) Try JSON manifest first
+        const jsonCandidates = [
+          `assets/appreciations.json?t=${ts}`,
+          new URL(`assets/appreciations.json?t=${ts}`, baseAbs).toString(),
+          `/assets/appreciations.json?t=${ts}`,
+          `/portfolio/assets/appreciations.json?t=${ts}`,
+        ];
+        for (const url of jsonCandidates) {
+          try {
+            const res = await fetch(url, { cache: 'no-store' });
+            if (res.ok) {
+              const json = await res.json();
+              if (Array.isArray(json) && json.length) {
+                const mapped = (json as any[])
+                  .map((a) => ({ image: a.image, title: a.title, date: a.date, from: a.from, description: a.description }))
+                  .filter((a) => a.image);
+                if (mapped.length) {
+                  setAppreciations(mapped as Appreciation[]);
+                  return;
+                }
+              }
+            }
+          } catch (err) {
+            // try next
+          }
+        }
+
+        // 2) Fallback: probe a small set of common filenames in /assets
+        const imageNames = [
+          'appreciation.jpg', 'appreciation.jpeg', 'appreciation.png',
+          'appreciation-1.jpg', 'appreciation-1.png', 'appreciation1.jpg', 'appreciation1.png',
+          'appreciations/1.jpg', 'appreciations/01.jpg', 'appreciations/appreciation1.jpg'
+        ];
+        const imageCandidates: string[] = [];
+        for (const name of imageNames) {
+          imageCandidates.push(
+            `assets/${name}?t=${ts}`,
+            new URL(`assets/${name}?t=${ts}`, baseAbs).toString(),
+            `/assets/${name}?t=${ts}`,
+            `/portfolio/assets/${name}?t=${ts}`,
+          );
+        }
+        for (const url of imageCandidates) {
+          try {
+            const res = await fetch(url, { method: 'HEAD', cache: 'no-store' });
+            if (res.ok) {
+              setAppreciations([{ image: url }]);
+              return;
+            }
+          } catch (err) {
+            // try next
+          }
+        }
+      } catch (e) {
+        // ignore
+      }
+    };
+    loadAppreciations();
+  }, []);
+
   const allRecommendations: Recommendation[] = useMemo(() => {
     // Merge static recommendations from portfolioData with fetched ones
     const staticRecs = (portfolioData as any).recommendations || [];
@@ -153,6 +233,15 @@ const Portfolio: React.FC = () => {
         .forEach((el) => el.classList.add('active'));
     }
   }, [allRecommendations.length]);
+
+  // Ensure dynamically loaded appreciations animate in
+  useEffect(() => {
+    if (appreciations.length > 0) {
+      document
+        .querySelectorAll('#appreciations .fade-in')
+        .forEach((el) => el.classList.add('active'));
+    }
+  }, [appreciations.length]);
 
   useEffect(() => {
     // Add click outside handler to close mobile menu
@@ -233,6 +322,7 @@ const Portfolio: React.FC = () => {
     { id: 'experience', label: 'Experience' },
     { id: 'skills', label: 'Skills' },
     { id: 'education', label: 'Education' },
+  { id: 'appreciations', label: 'Appreciations' },
   { id: 'recommendations', label: 'Recommendations' },
     { id: 'contact', label: 'Contact' }
   ];
@@ -773,6 +863,58 @@ const Portfolio: React.FC = () => {
                     </a>
                   </div>
                 </div>
+              ))}
+            </div>
+          )}
+        </div>
+      </section>
+
+      {/* Appreciations Section */}
+      <section id="appreciations" className="section">
+        <div className="max-w-6xl mx-auto px-8">
+          <h2 className="text-4xl font-bold text-center mb-12 fade-in" style={{ color: 'var(--primary-color)' }}>
+            Appreciations
+          </h2>
+
+          {appreciations.length === 0 ? (
+            <div
+              className="max-w-3xl mx-auto p-8 rounded-2xl text-center fade-in"
+              style={{ backgroundColor: 'var(--surface-color)', boxShadow: 'var(--shadow)' }}
+            >
+              <p className="text-lg" style={{ color: 'var(--text-secondary)' }}>
+                Drop an image in <code>client/public/assets</code> named <strong>appreciation.jpg</strong> (or appreciation.png/jpeg),
+                or add an <strong>appreciations.json</strong> manifest to show items here.
+              </p>
+            </div>
+          ) : (
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-5xl mx-auto">
+              {appreciations.map((a, idx) => (
+                <figure
+                  key={`appr-${idx}`}
+                  className="p-4 rounded-2xl fade-in"
+                  style={{ backgroundColor: 'var(--surface-color)', boxShadow: 'var(--shadow)' }}
+                >
+                  <div className="overflow-hidden rounded-lg border" style={{ borderColor: 'var(--border-color)' }}>
+                    <img
+                      src={a.image}
+                      alt={a.title || a.from || `Appreciation ${idx + 1}`}
+                      className="w-full h-auto object-contain"
+                      loading="lazy"
+                      onClick={() => trackEvent('open', 'appreciation', a.image)}
+                      onError={(e) => {
+                        // Hide broken images but keep card
+                        (e.currentTarget as HTMLImageElement).style.display = 'none';
+                      }}
+                    />
+                  </div>
+                  {(a.title || a.from || a.date || a.description) && (
+                    <figcaption className="mt-3 text-sm" style={{ color: 'var(--text-secondary)' }}>
+                      <div className="font-medium" style={{ color: 'var(--text-primary)' }}>{a.title}</div>
+                      <div>{a.from}{a.date ? ` • ${a.date}` : ''}</div>
+                      {a.description && <div className="mt-1">{a.description}</div>}
+                    </figcaption>
+                  )}
+                </figure>
               ))}
             </div>
           )}
