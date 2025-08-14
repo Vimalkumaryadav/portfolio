@@ -148,7 +148,7 @@ const Portfolio: React.FC = () => {
     loadRecs();
   }, []);
 
-  // Fetch appreciations from public assets with robust fallbacks
+  // Fetch appreciations by probing common screenshot filenames in /assets (no JSON manifest)
   useEffect(() => {
     const loadAppreciations = async () => {
       try {
@@ -159,38 +159,14 @@ const Portfolio: React.FC = () => {
         const baseAbs = new URL(normalizedBase, window.location.origin).toString();
         const ts = Date.now();
 
-        // 1) Try JSON manifest first
-        const jsonCandidates = [
-          `assets/appreciations.json?t=${ts}`,
-          new URL(`assets/appreciations.json?t=${ts}`, baseAbs).toString(),
-          `/assets/appreciations.json?t=${ts}`,
-          `/portfolio/assets/appreciations.json?t=${ts}`,
-        ];
-        for (const url of jsonCandidates) {
-          try {
-            const res = await fetch(url, { cache: 'no-store' });
-            if (res.ok) {
-              const json = await res.json();
-              if (Array.isArray(json) && json.length) {
-                const mapped = (json as any[])
-                  .map((a) => ({ image: a.image, title: a.title, date: a.date, from: a.from, description: a.description }))
-                  .filter((a) => a.image);
-                if (mapped.length) {
-                  setAppreciations(mapped as Appreciation[]);
-                  return;
-                }
-              }
-            }
-          } catch (err) {
-            // try next
-          }
-        }
-
-        // 2) Fallback: probe a small set of common filenames in /assets
+        // Probe a small set of common filenames in /assets (case variants included)
         const imageNames = [
+          // Preferred name
+          'Appreciation.jpg', 'Appreciation.jpeg', 'Appreciation.png',
+          // Lowercase variants
           'appreciation.jpg', 'appreciation.jpeg', 'appreciation.png',
-          'appreciation-1.jpg', 'appreciation-1.png', 'appreciation1.jpg', 'appreciation1.png',
-          'appreciations/1.jpg', 'appreciations/01.jpg', 'appreciations/appreciation1.jpg'
+          // Simple alternates
+          'screenshot.jpg', 'screenshot.png', 'kudos.jpg', 'kudos.png',
         ];
         const imageCandidates: string[] = [];
         for (const name of imageNames) {
@@ -209,7 +185,7 @@ const Portfolio: React.FC = () => {
               return;
             }
           } catch (err) {
-            // try next
+            // continue
           }
         }
       } catch (e) {
@@ -876,14 +852,14 @@ const Portfolio: React.FC = () => {
             Appreciations
           </h2>
 
-          {appreciations.length === 0 ? (
+      {appreciations.length === 0 ? (
             <div
               className="max-w-3xl mx-auto p-8 rounded-2xl text-center fade-in"
               style={{ backgroundColor: 'var(--surface-color)', boxShadow: 'var(--shadow)' }}
             >
               <p className="text-lg" style={{ color: 'var(--text-secondary)' }}>
-                Drop an image in <code>client/public/assets</code> named <strong>appreciation.jpg</strong> (or appreciation.png/jpeg),
-                or add an <strong>appreciations.json</strong> manifest to show items here.
+        Drop a screenshot in <code>client/public/assets</code> named <strong>Appreciation.jpg</strong>
+        (also tries appreciation.jpg/.png/.jpeg). The section will pick it up automatically.
               </p>
             </div>
           ) : (
