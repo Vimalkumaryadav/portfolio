@@ -409,7 +409,8 @@ const Portfolio: React.FC = () => {
             <div className="relative">
               <button
                 aria-label={isDark ? 'Switch to Day' : 'Switch to Night'}
-                className="flex items-center gap-3 px-4 py-2 border rounded-lg transition-all duration-300"
+                title={isDark ? 'Switch to Day' : 'Switch to Night'}
+                className="flex items-center px-2 py-2 border rounded-lg transition-all duration-300"
                 style={{
                   borderColor: 'var(--border-color)',
                   backgroundColor: 'var(--surface-color)',
@@ -428,9 +429,6 @@ const Portfolio: React.FC = () => {
                     <i className={isDark ? 'fas fa-moon' : 'fas fa-sun'} />
                   </div>
                 </div>
-                <span className="text-sm font-medium min-w-[46px] text-center">
-                  {isDark ? 'Night' : 'Day'}
-                </span>
               </button>
             </div>
 
