@@ -47,17 +47,17 @@ const Portfolio: React.FC = () => {
       setScrollProgress(scrolled);
       setIsHeaderScrolled(window.scrollY > 100);
       
-      // Update active section
+      // Update active section: pick the last section whose top has crossed the header
   const sections = ['home', 'about', 'experience', 'skills', 'education', 'appreciations', 'recommendations', 'contact'];
+  const headerEl = document.querySelector('.header') as HTMLElement | null;
+  const headerHeight = (headerEl?.getBoundingClientRect().height ?? 80) + 8;
       let current = 'home';
-      
-      for (const sectionId of sections) {
-        const element = document.getElementById(sectionId);
-        if (element) {
-          const rect = element.getBoundingClientRect();
-          if (rect.top <= 200 && rect.bottom >= 200) {
-            current = sectionId;
-          }
+      for (const id of sections) {
+        const el = document.getElementById(id);
+        if (!el) continue;
+        const rect = el.getBoundingClientRect();
+        if (rect.top <= headerHeight + 8) {
+          current = id; // last match wins as we scroll down
         }
       }
       setActiveSection(current);
@@ -265,11 +265,25 @@ const Portfolio: React.FC = () => {
     };
   }, [isMobileMenuOpen]);
 
+  // Keep a CSS variable in sync with header height for scroll-margin-top
+  useEffect(() => {
+    const updateHeaderOffset = () => {
+      const headerEl = document.querySelector('.header') as HTMLElement | null;
+      const h = Math.ceil(headerEl?.getBoundingClientRect().height ?? 80) + 8;
+      document.documentElement.style.setProperty('--header-offset', `${h}px`);
+    };
+    updateHeaderOffset();
+    window.addEventListener('resize', updateHeaderOffset);
+    return () => window.removeEventListener('resize', updateHeaderOffset);
+  }, []);
+
   const scrollToSection = (sectionId: string) => {
     const element = document.getElementById(sectionId);
     if (element) {
-      const headerHeight = 80;
-      const targetPosition = element.offsetTop - headerHeight;
+  const headerEl = document.querySelector('.header') as HTMLElement | null;
+  const headerHeight = (headerEl?.getBoundingClientRect().height ?? 80) + 8;
+  const rect = element.getBoundingClientRect();
+  const targetPosition = window.scrollY + rect.top - headerHeight;
       
       window.scrollTo({
         top: targetPosition,
