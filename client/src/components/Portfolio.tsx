@@ -2,6 +2,7 @@ import React, { useEffect, useMemo, useState } from 'react';
 import { useTheme } from './ThemeProvider';
 import { portfolioData } from '../data/portfolioData';
 import { useAnalytics } from '../hooks/useAnalytics';
+import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from './ui/carousel';
 
 // Theme type comes from ThemeProvider; we only toggle between 'light' and 'dark'
 
@@ -623,160 +624,298 @@ const Portfolio: React.FC = () => {
           <h2 className="text-4xl font-bold text-center mb-12 fade-in" style={{ color: 'var(--primary-color)' }}>
             Technical Skills
           </h2>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto">
-            {Object.entries(portfolioData.skills).map(([category, skills]) => (
-              <div 
-                key={category}
-                className="p-8 rounded-2xl fade-in"
-                style={{
-                  backgroundColor: 'var(--surface-color)',
-                  boxShadow: 'var(--shadow)'
-                }}
-              >
-                <h3 className="text-xl font-semibold mb-6 text-center" style={{ color: 'var(--primary-color)' }}>
-                  {category}
-                </h3>
-                <div className="flex flex-wrap gap-4 justify-center">
-                  {skills.map((skill, index) => (
-                    <div 
-                      key={index}
-                      className="flex items-center gap-2 px-4 py-2 rounded-full border transition-all duration-300 hover:-translate-y-1"
-                      style={{
-                        backgroundColor: 'var(--background-color)',
-                        borderColor: 'var(--border-color)'
-                      }}
-                      onMouseEnter={(e) => {
-                        e.currentTarget.style.boxShadow = 'var(--shadow)';
-                        e.currentTarget.style.borderColor = 'var(--primary-color)';
-                      }}
-                      onMouseLeave={(e) => {
-                        e.currentTarget.style.boxShadow = 'none';
-                        e.currentTarget.style.borderColor = 'var(--border-color)';
-                      }}
+          {isSmallScreen ? (
+            <Carousel className="max-w-5xl mx-auto">
+              <CarouselContent>
+                {Object.entries(portfolioData.skills).map(([category, skills]) => (
+                  <CarouselItem key={category}>
+                    <div
+                      className="p-8 rounded-2xl"
+                      style={{ backgroundColor: 'var(--surface-color)', boxShadow: 'var(--shadow)' }}
                     >
-                      {(() => {
-                        const iconVal = String((skill as any).icon);
-                        if (iconVal.startsWith('img:')) {
-                          const primary = iconVal.slice(4);
-                          // Alternate URLs to try per icon key
-                          const fallbacks: Record<string, string[]> = {
-                            githubcopilot: [
-                              'https://cdn.simpleicons.org/githubcopilot',
-                              'https://skillicons.dev/icons?i=githubcopilot'
-                            ],
-                            restassured: [
-                              'https://cdn.simpleicons.org/restassured/00A651',
-                              'https://cdn.simpleicons.org/restassured'
-                            ],
-                            selenium: [
-                              'https://cdn.simpleicons.org/selenium/43B02A',
-                              'https://cdn.simpleicons.org/selenium'
-                            ],
-                            webdriverio: [
-                              'https://unpkg.com/devicon@2.15.1/icons/webdriverio/webdriverio-original.svg',
-                              'https://cdn.jsdelivr.net/npm/devicon@2.15.1/icons/webdriverio/webdriverio-original.svg'
-                            ],
-                            cucumber: [
-                              'https://unpkg.com/devicon@2.15.1/icons/cucumber/cucumber-plain.svg',
-                              'https://cdn.jsdelivr.net/npm/devicon@2.15.1/icons/cucumber/cucumber-plain.svg'
-                            ],
-                            java: [
-                              'https://unpkg.com/devicon@2.15.1/icons/java/java-original.svg',
-                              'https://cdn.jsdelivr.net/npm/devicon@2.15.1/icons/java/java-original.svg'
-                            ],
-                            javascript: [
-                              'https://unpkg.com/devicon@2.15.1/icons/javascript/javascript-original.svg',
-                              'https://cdn.jsdelivr.net/npm/devicon@2.15.1/icons/javascript/javascript-original.svg'
-                            ],
-                            nodejs: [
-                              'https://unpkg.com/devicon@2.15.1/icons/nodejs/nodejs-original.svg',
-                              'https://cdn.jsdelivr.net/npm/devicon@2.15.1/icons/nodejs/nodejs-original.svg'
-                            ],
-                            git: [
-                              'https://unpkg.com/devicon@2.15.1/icons/git/git-original.svg',
-                              'https://cdn.jsdelivr.net/npm/devicon@2.15.1/icons/git/git-original.svg'
-                            ],
-                            apachemaven: [
-                              'https://unpkg.com/devicon@2.15.1/icons/apachemaven/apachemaven-original.svg',
-                              'https://cdn.jsdelivr.net/npm/devicon@2.15.1/icons/apachemaven/apachemaven-original.svg'
-                            ],
-                            postman: [
-                              'https://unpkg.com/devicon@2.15.1/icons/postman/postman-original.svg',
-                              'https://cdn.jsdelivr.net/npm/devicon@2.15.1/icons/postman/postman-original.svg'
-                            ],
-                            jira: [
-                              'https://unpkg.com/devicon@2.15.1/icons/jira/jira-original.svg',
-                              'https://cdn.jsdelivr.net/npm/devicon@2.15.1/icons/jira/jira-original.svg'
-                            ],
-                            mysql: [
-                              'https://unpkg.com/devicon@2.15.1/icons/mysql/mysql-original.svg',
-                              'https://cdn.jsdelivr.net/npm/devicon@2.15.1/icons/mysql/mysql-original.svg'
-                            ],
-                            perforce: [
-                              'https://unpkg.com/devicon@2.15.1/icons/perforce/perforce-original.svg',
-                              'https://cdn.jsdelivr.net/npm/devicon@2.15.1/icons/perforce/perforce-original.svg'
-                            ],
-                          };
-                          const key = Object.keys(fallbacks).find(k => primary.includes(k)) ?? '';
-                          return (
-                            <img
-                              src={primary}
-                              alt={String((skill as any).name)}
-                              className="w-5 h-5"
-                              loading="lazy"
-                              onError={(e) => {
-                                const img = e.currentTarget as HTMLImageElement & { dataset: { idx?: string } };
-                                const list = key ? fallbacks[key] : [];
-                                const nextIdx = ((img.dataset.idx ? parseInt(img.dataset.idx, 10) : -1) + 1);
-                                if (key && list[nextIdx]) {
-                                  img.dataset.idx = String(nextIdx);
-                                  img.src = list[nextIdx];
-                                } else {
-                                  img.style.display = 'none';
-                                }
-                              }}
-                            />
-                          );
-                        }
-                        if (iconVal.startsWith('si:')) {
-                          const slug = iconVal.slice(3);
-                          // Simple Icons default to black; switch to white on non-light themes for contrast
-                          const isLight = theme === 'light';
-                          const colorHex = isLight ? '000000' : 'ffffff';
-                          const src = `https://cdn.simpleicons.org/${slug}/${colorHex}`;
-                          return (
-                            <img
-                              src={src}
-                              alt={String((skill as any).name)}
-                              className="w-5 h-5"
-                              loading="lazy"
-                              onError={(e) => {
-                                const img = e.currentTarget as HTMLImageElement & { dataset: { triedNoColor?: string } };
-                                if (!img.dataset.triedNoColor) {
-                                  img.dataset.triedNoColor = '1';
-                                  img.src = `https://cdn.simpleicons.org/${slug}`; // retry default color
-                                } else {
-                                  // hide broken icon, label still shows
-                                  img.style.display = 'none';
-                                }
-                              }}
-                            />
-                          );
-                        }
-                        return (
-                          <i
-                            className={`${iconVal} text-xl`}
-                            style={{ color: 'var(--primary-color)' }}
-                          />
-                        );
-                      })()}
-                      <span>{skill.name}</span>
+                      <h3 className="text-xl font-semibold mb-6 text-center" style={{ color: 'var(--primary-color)' }}>
+                        {category}
+                      </h3>
+                      <div className="flex flex-wrap gap-4 justify-center">
+                        {skills.map((skill, index) => (
+                          <div
+                            key={index}
+                            className="flex items-center gap-2 px-4 py-2 rounded-full border transition-all duration-300 hover:-translate-y-1"
+                            style={{ backgroundColor: 'var(--background-color)', borderColor: 'var(--border-color)' }}
+                            onMouseEnter={(e) => {
+                              e.currentTarget.style.boxShadow = 'var(--shadow)';
+                              e.currentTarget.style.borderColor = 'var(--primary-color)';
+                            }}
+                            onMouseLeave={(e) => {
+                              e.currentTarget.style.boxShadow = 'none';
+                              e.currentTarget.style.borderColor = 'var(--border-color)';
+                            }}
+                          >
+                            {(() => {
+                              const iconVal = String((skill as any).icon);
+                              if (iconVal.startsWith('img:')) {
+                                const primary = iconVal.slice(4);
+                                const fallbacks: Record<string, string[]> = {
+                                  githubcopilot: [
+                                    'https://cdn.simpleicons.org/githubcopilot',
+                                    'https://skillicons.dev/icons?i=githubcopilot'
+                                  ],
+                                  restassured: [
+                                    'https://cdn.simpleicons.org/restassured/00A651',
+                                    'https://cdn.simpleicons.org/restassured'
+                                  ],
+                                  selenium: [
+                                    'https://cdn.simpleicons.org/selenium/43B02A',
+                                    'https://cdn.simpleicons.org/selenium'
+                                  ],
+                                  webdriverio: [
+                                    'https://unpkg.com/devicon@2.15.1/icons/webdriverio/webdriverio-original.svg',
+                                    'https://cdn.jsdelivr.net/npm/devicon@2.15.1/icons/webdriverio/webdriverio-original.svg'
+                                  ],
+                                  cucumber: [
+                                    'https://unpkg.com/devicon@2.15.1/icons/cucumber/cucumber-plain.svg',
+                                    'https://cdn.jsdelivr.net/npm/devicon@2.15.1/icons/cucumber/cucumber-plain.svg'
+                                  ],
+                                  java: [
+                                    'https://unpkg.com/devicon@2.15.1/icons/java/java-original.svg',
+                                    'https://cdn.jsdelivr.net/npm/devicon@2.15.1/icons/java/java-original.svg'
+                                  ],
+                                  javascript: [
+                                    'https://unpkg.com/devicon@2.15.1/icons/javascript/javascript-original.svg',
+                                    'https://cdn.jsdelivr.net/npm/devicon@2.15.1/icons/javascript/javascript-original.svg'
+                                  ],
+                                  nodejs: [
+                                    'https://unpkg.com/devicon@2.15.1/icons/nodejs/nodejs-original.svg',
+                                    'https://cdn.jsdelivr.net/npm/devicon@2.15.1/icons/nodejs/nodejs-original.svg'
+                                  ],
+                                  git: [
+                                    'https://unpkg.com/devicon@2.15.1/icons/git/git-original.svg',
+                                    'https://cdn.jsdelivr.net/npm/devicon@2.15.1/icons/git/git-original.svg'
+                                  ],
+                                  apachemaven: [
+                                    'https://unpkg.com/devicon@2.15.1/icons/apachemaven/apachemaven-original.svg',
+                                    'https://cdn.jsdelivr.net/npm/devicon@2.15.1/icons/apachemaven/apachemaven-original.svg'
+                                  ],
+                                  postman: [
+                                    'https://unpkg.com/devicon@2.15.1/icons/postman/postman-original.svg',
+                                    'https://cdn.jsdelivr.net/npm/devicon@2.15.1/icons/postman/postman-original.svg'
+                                  ],
+                                  jira: [
+                                    'https://unpkg.com/devicon@2.15.1/icons/jira/jira-original.svg',
+                                    'https://cdn.jsdelivr.net/npm/devicon@2.15.1/icons/jira/jira-original.svg'
+                                  ],
+                                  mysql: [
+                                    'https://unpkg.com/devicon@2.15.1/icons/mysql/mysql-original.svg',
+                                    'https://cdn.jsdelivr.net/npm/devicon@2.15.1/icons/mysql/mysql-original.svg'
+                                  ],
+                                  perforce: [
+                                    'https://unpkg.com/devicon@2.15.1/icons/perforce/perforce-original.svg',
+                                    'https://cdn.jsdelivr.net/npm/devicon@2.15.1/icons/perforce/perforce-original.svg'
+                                  ],
+                                };
+                                const key = Object.keys(fallbacks).find(k => primary.includes(k)) ?? '';
+                                return (
+                                  <img
+                                    src={primary}
+                                    alt={String((skill as any).name)}
+                                    className="w-5 h-5"
+                                    loading="lazy"
+                                    onError={(e) => {
+                                      const img = e.currentTarget as HTMLImageElement & { dataset: { idx?: string } };
+                                      const list = key ? fallbacks[key] : [];
+                                      const nextIdx = ((img.dataset.idx ? parseInt(img.dataset.idx, 10) : -1) + 1);
+                                      if (key && list[nextIdx]) {
+                                        img.dataset.idx = String(nextIdx);
+                                        img.src = list[nextIdx];
+                                      } else {
+                                        img.style.display = 'none';
+                                      }
+                                    }}
+                                  />
+                                );
+                              }
+                              if (iconVal.startsWith('si:')) {
+                                const slug = iconVal.slice(3);
+                                const isLight = theme === 'light';
+                                const colorHex = isLight ? '000000' : 'ffffff';
+                                const src = `https://cdn.simpleicons.org/${slug}/${colorHex}`;
+                                return (
+                                  <img
+                                    src={src}
+                                    alt={String((skill as any).name)}
+                                    className="w-5 h-5"
+                                    loading="lazy"
+                                    onError={(e) => {
+                                      const img = e.currentTarget as HTMLImageElement & { dataset: { triedNoColor?: string } };
+                                      if (!img.dataset.triedNoColor) {
+                                        img.dataset.triedNoColor = '1';
+                                        img.src = `https://cdn.simpleicons.org/${slug}`;
+                                      } else {
+                                        img.style.display = 'none';
+                                      }
+                                    }}
+                                  />
+                                );
+                              }
+                              return (
+                                <i className={`${iconVal} text-xl`} style={{ color: 'var(--primary-color)' }} />
+                              );
+                            })()}
+                            <span>{(skill as any).name}</span>
+                          </div>
+                        ))}
+                      </div>
                     </div>
-                  ))}
+                  </CarouselItem>
+                ))}
+              </CarouselContent>
+              <CarouselPrevious className="left-2 -translate-y-1/2" />
+              <CarouselNext className="right-2 -translate-y-1/2" />
+            </Carousel>
+          ) : (
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto">
+              {Object.entries(portfolioData.skills).map(([category, skills]) => (
+                <div
+                  key={category}
+                  className="p-8 rounded-2xl fade-in"
+                  style={{ backgroundColor: 'var(--surface-color)', boxShadow: 'var(--shadow)' }}
+                >
+                  <h3 className="text-xl font-semibold mb-6 text-center" style={{ color: 'var(--primary-color)' }}>
+                    {category}
+                  </h3>
+                  <div className="flex flex-wrap gap-4 justify-center">
+                    {skills.map((skill, index) => (
+                      <div
+                        key={index}
+                        className="flex items-center gap-2 px-4 py-2 rounded-full border transition-all duration-300 hover:-translate-y-1"
+                        style={{ backgroundColor: 'var(--background-color)', borderColor: 'var(--border-color)' }}
+                        onMouseEnter={(e) => {
+                          e.currentTarget.style.boxShadow = 'var(--shadow)';
+                          e.currentTarget.style.borderColor = 'var(--primary-color)';
+                        }}
+                        onMouseLeave={(e) => {
+                          e.currentTarget.style.boxShadow = 'none';
+                          e.currentTarget.style.borderColor = 'var(--border-color)';
+                        }}
+                      >
+                        {(() => {
+                          const iconVal = String((skill as any).icon);
+                          if (iconVal.startsWith('img:')) {
+                            const primary = iconVal.slice(4);
+                            const fallbacks: Record<string, string[]> = {
+                              githubcopilot: [
+                                'https://cdn.simpleicons.org/githubcopilot',
+                                'https://skillicons.dev/icons?i=githubcopilot'
+                              ],
+                              restassured: [
+                                'https://cdn.simpleicons.org/restassured/00A651',
+                                'https://cdn.simpleicons.org/restassured'
+                              ],
+                              selenium: [
+                                'https://cdn.simpleicons.org/selenium/43B02A',
+                                'https://cdn.simpleicons.org/selenium'
+                              ],
+                              webdriverio: [
+                                'https://unpkg.com/devicon@2.15.1/icons/webdriverio/webdriverio-original.svg',
+                                'https://cdn.jsdelivr.net/npm/devicon@2.15.1/icons/webdriverio/webdriverio-original.svg'
+                              ],
+                              cucumber: [
+                                'https://unpkg.com/devicon@2.15.1/icons/cucumber/cucumber-plain.svg',
+                                'https://cdn.jsdelivr.net/npm/devicon@2.15.1/icons/cucumber/cucumber-plain.svg'
+                              ],
+                              java: [
+                                'https://unpkg.com/devicon@2.15.1/icons/java/java-original.svg',
+                                'https://cdn.jsdelivr.net/npm/devicon@2.15.1/icons/java/java-original.svg'
+                              ],
+                              javascript: [
+                                'https://unpkg.com/devicon@2.15.1/icons/javascript/javascript-original.svg',
+                                'https://cdn.jsdelivr.net/npm/devicon@2.15.1/icons/javascript/javascript-original.svg'
+                              ],
+                              nodejs: [
+                                'https://unpkg.com/devicon@2.15.1/icons/nodejs/nodejs-original.svg',
+                                'https://cdn.jsdelivr.net/npm/devicon@2.15.1/icons/nodejs/nodejs-original.svg'
+                              ],
+                              git: [
+                                'https://unpkg.com/devicon@2.15.1/icons/git/git-original.svg',
+                                'https://cdn.jsdelivr.net/npm/devicon@2.15.1/icons/git/git-original.svg'
+                              ],
+                              apachemaven: [
+                                'https://unpkg.com/devicon@2.15.1/icons/apachemaven/apachemaven-original.svg',
+                                'https://cdn.jsdelivr.net/npm/devicon@2.15.1/icons/apachemaven/apachemaven-original.svg'
+                              ],
+                              postman: [
+                                'https://unpkg.com/devicon@2.15.1/icons/postman/postman-original.svg',
+                                'https://cdn.jsdelivr.net/npm/devicon@2.15.1/icons/postman/postman-original.svg'
+                              ],
+                              jira: [
+                                'https://unpkg.com/devicon@2.15.1/icons/jira/jira-original.svg',
+                                'https://cdn.jsdelivr.net/npm/devicon@2.15.1/icons/jira/jira-original.svg'
+                              ],
+                              mysql: [
+                                'https://unpkg.com/devicon@2.15.1/icons/mysql/mysql-original.svg',
+                                'https://cdn.jsdelivr.net/npm/devicon@2.15.1/icons/mysql/mysql-original.svg'
+                              ],
+                              perforce: [
+                                'https://unpkg.com/devicon@2.15.1/icons/perforce/perforce-original.svg',
+                                'https://cdn.jsdelivr.net/npm/devicon@2.15.1/icons/perforce/perforce-original.svg'
+                              ],
+                            };
+                            const key = Object.keys(fallbacks).find(k => primary.includes(k)) ?? '';
+                            return (
+                              <img
+                                src={primary}
+                                alt={String((skill as any).name)}
+                                className="w-5 h-5"
+                                loading="lazy"
+                                onError={(e) => {
+                                  const img = e.currentTarget as HTMLImageElement & { dataset: { idx?: string } };
+                                  const list = key ? fallbacks[key] : [];
+                                  const nextIdx = ((img.dataset.idx ? parseInt(img.dataset.idx, 10) : -1) + 1);
+                                  if (key && list[nextIdx]) {
+                                    img.dataset.idx = String(nextIdx);
+                                    img.src = list[nextIdx];
+                                  } else {
+                                    img.style.display = 'none';
+                                  }
+                                }}
+                              />
+                            );
+                          }
+                          if (iconVal.startsWith('si:')) {
+                            const slug = iconVal.slice(3);
+                            const isLight = theme === 'light';
+                            const colorHex = isLight ? '000000' : 'ffffff';
+                            const src = `https://cdn.simpleicons.org/${slug}/${colorHex}`;
+                            return (
+                              <img
+                                src={src}
+                                alt={String((skill as any).name)}
+                                className="w-5 h-5"
+                                loading="lazy"
+                                onError={(e) => {
+                                  const img = e.currentTarget as HTMLImageElement & { dataset: { triedNoColor?: string } };
+                                  if (!img.dataset.triedNoColor) {
+                                    img.dataset.triedNoColor = '1';
+                                    img.src = `https://cdn.simpleicons.org/${slug}`;
+                                  } else {
+                                    img.style.display = 'none';
+                                  }
+                                }}
+                              />
+                            );
+                          }
+                          return (
+                            <i className={`${iconVal} text-xl`} style={{ color: 'var(--primary-color)' }} />
+                          );
+                        })()}
+                        <span>{(skill as any).name}</span>
+                      </div>
+                    ))}
+                  </div>
                 </div>
-              </div>
-            ))}
-          </div>
+              ))}
+            </div>
+          )}
         </div>
       </section>
 
@@ -830,54 +969,84 @@ const Portfolio: React.FC = () => {
               </a>
             </div>
           ) : (
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-5xl mx-auto">
-              {allRecommendations.map((rec, idx) => (
-                <div
-                  key={`${rec.name}-${idx}`}
-                  className="p-6 rounded-2xl fade-in h-full flex flex-col"
-                  style={{ backgroundColor: 'var(--surface-color)', boxShadow: 'var(--shadow)' }}
-                >
-                  <div className="flex items-center gap-4 mb-4">
-                    <div
-                      className="w-12 h-12 rounded-full flex items-center justify-center border-2 overflow-hidden"
-                      style={{ borderColor: 'var(--primary-color)' }}
-                      aria-hidden="true"
-                    >
-                      {rec.avatar ? (
-                        <img src={rec.avatar} alt={rec.name} className="w-full h-full object-cover" />
-                      ) : (
-                        <span className="font-semibold" style={{ color: 'var(--primary-color)' }}>
-                          {rec.name.split(' ').map(p => p[0]).slice(0,2).join('')}
-                        </span>
-                      )}
+            isSmallScreen ? (
+              <Carousel className="max-w-5xl mx-auto">
+                <CarouselContent>
+                  {allRecommendations.map((rec, idx) => (
+                    <CarouselItem key={`${rec.name}-${idx}`}>
+                      <div
+                        className="p-6 rounded-2xl h-full flex flex-col"
+                        style={{ backgroundColor: 'var(--surface-color)', boxShadow: 'var(--shadow)' }}
+                      >
+                        <div className="flex items-center gap-4 mb-4">
+                          <div className="w-12 h-12 rounded-full flex items-center justify-center border-2 overflow-hidden" style={{ borderColor: 'var(--primary-color)' }} aria-hidden="true">
+                            {rec.avatar ? (
+                              <img src={rec.avatar} alt={rec.name} className="w-full h-full object-cover" />
+                            ) : (
+                              <span className="font-semibold" style={{ color: 'var(--primary-color)' }}>
+                                {rec.name.split(' ').map(p => p[0]).slice(0,2).join('')}
+                              </span>
+                            )}
+                          </div>
+                          <div className="min-w-0">
+                            <p className="font-semibold" style={{ color: 'var(--text-primary)' }}>{rec.name}</p>
+                            <p className="text-sm" style={{ color: 'var(--text-secondary)' }}>{rec.role}</p>
+                            <p className="text-xs" style={{ color: 'var(--text-secondary)' }}>{rec.relationship} • {rec.date}</p>
+                          </div>
+                        </div>
+                        <div className="flex-1">
+                          <i className="fas fa-quote-left mr-2" style={{ color: 'var(--primary-color)' }} />
+                          <span style={{ color: 'var(--text-secondary)' }}>{rec.text}</span>
+                        </div>
+                        <div className="mt-4 flex items-center justify-between">
+                          <a href={rec.linkedinUrl} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 text-sm font-medium" style={{ color: 'var(--primary-color)' }} onClick={() => trackEvent('outbound', 'linkedin-recommendation', rec.name)}>
+                            <i className="fab fa-linkedin" /> View on LinkedIn
+                          </a>
+                        </div>
+                      </div>
+                    </CarouselItem>
+                  ))}
+                </CarouselContent>
+                <CarouselPrevious className="left-2 -translate-y-1/2" />
+                <CarouselNext className="right-2 -translate-y-1/2" />
+              </Carousel>
+            ) : (
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-5xl mx-auto">
+                {allRecommendations.map((rec, idx) => (
+                  <div
+                    key={`${rec.name}-${idx}`}
+                    className="p-6 rounded-2xl fade-in h-full flex flex-col"
+                    style={{ backgroundColor: 'var(--surface-color)', boxShadow: 'var(--shadow)' }}
+                  >
+                    <div className="flex items-center gap-4 mb-4">
+                      <div className="w-12 h-12 rounded-full flex items-center justify-center border-2 overflow-hidden" style={{ borderColor: 'var(--primary-color)' }} aria-hidden="true">
+                        {rec.avatar ? (
+                          <img src={rec.avatar} alt={rec.name} className="w-full h-full object-cover" />
+                        ) : (
+                          <span className="font-semibold" style={{ color: 'var(--primary-color)' }}>
+                            {rec.name.split(' ').map(p => p[0]).slice(0,2).join('')}
+                          </span>
+                        )}
+                      </div>
+                      <div className="min-w-0">
+                        <p className="font-semibold" style={{ color: 'var(--text-primary)' }}>{rec.name}</p>
+                        <p className="text-sm" style={{ color: 'var(--text-secondary)' }}>{rec.role}</p>
+                        <p className="text-xs" style={{ color: 'var(--text-secondary)' }}>{rec.relationship} • {rec.date}</p>
+                      </div>
                     </div>
-                    <div className="min-w-0">
-                      <p className="font-semibold" style={{ color: 'var(--text-primary)' }}>{rec.name}</p>
-                      <p className="text-sm" style={{ color: 'var(--text-secondary)' }}>{rec.role}</p>
-                      <p className="text-xs" style={{ color: 'var(--text-secondary)' }}>{rec.relationship} • {rec.date}</p>
+                    <div className="flex-1">
+                      <i className="fas fa-quote-left mr-2" style={{ color: 'var(--primary-color)' }} />
+                      <span style={{ color: 'var(--text-secondary)' }}>{rec.text}</span>
+                    </div>
+                    <div className="mt-4 flex items-center justify-between">
+                      <a href={rec.linkedinUrl} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 text-sm font-medium" style={{ color: 'var(--primary-color)' }} onClick={() => trackEvent('outbound', 'linkedin-recommendation', rec.name)}>
+                        <i className="fab fa-linkedin" /> View on LinkedIn
+                      </a>
                     </div>
                   </div>
-
-                  <div className="flex-1">
-                    <i className="fas fa-quote-left mr-2" style={{ color: 'var(--primary-color)' }} />
-                    <span style={{ color: 'var(--text-secondary)' }}>{rec.text}</span>
-                  </div>
-
-                  <div className="mt-4 flex items-center justify-between">
-                    <a
-                      href={rec.linkedinUrl}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="inline-flex items-center gap-2 text-sm font-medium"
-                      style={{ color: 'var(--primary-color)' }}
-                      onClick={() => trackEvent('outbound', 'linkedin-recommendation', rec.name)}
-                    >
-                      <i className="fab fa-linkedin" /> View on LinkedIn
-                    </a>
-                  </div>
-                </div>
-              ))}
-            </div>
+                ))}
+              </div>
+            )
           )}
         </div>
       </section>
@@ -889,7 +1058,7 @@ const Portfolio: React.FC = () => {
             Appreciations
           </h2>
 
-      {appreciations.length === 0 ? (
+          {appreciations.length === 0 ? (
             <div
               className="max-w-3xl mx-auto p-8 rounded-2xl text-center fade-in"
               style={{ backgroundColor: 'var(--surface-color)', boxShadow: 'var(--shadow)' }}
@@ -900,36 +1069,61 @@ const Portfolio: React.FC = () => {
               </p>
             </div>
           ) : (
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-5xl mx-auto">
-              {appreciations.map((a, idx) => (
-                <figure
-                  key={`appr-${idx}`}
-                  className="p-4 rounded-2xl fade-in"
-                  style={{ backgroundColor: 'var(--surface-color)', boxShadow: 'var(--shadow)' }}
-                >
-                  <div className="overflow-hidden rounded-lg border" style={{ borderColor: 'var(--border-color)' }}>
-                    <img
-                      src={a.image}
-                      alt={a.title || a.from || `Appreciation ${idx + 1}`}
-                      className="w-full h-auto object-contain"
-                      loading="lazy"
-                      onClick={() => trackEvent('open', 'appreciation', a.image)}
-                      onError={(e) => {
-                        // Hide broken images but keep card
-                        (e.currentTarget as HTMLImageElement).style.display = 'none';
-                      }}
-                    />
-                  </div>
-                  {(a.title || a.from || a.date || a.description) && (
-                    <figcaption className="mt-3 text-sm" style={{ color: 'var(--text-secondary)' }}>
-                      <div className="font-medium" style={{ color: 'var(--text-primary)' }}>{a.title}</div>
-                      <div>{a.from}{a.date ? ` • ${a.date}` : ''}</div>
-                      {a.description && <div className="mt-1">{a.description}</div>}
-                    </figcaption>
-                  )}
-                </figure>
-              ))}
-            </div>
+            isSmallScreen ? (
+              <Carousel className="max-w-5xl mx-auto">
+                <CarouselContent>
+                  {appreciations.map((a, idx) => (
+                    <CarouselItem key={`appr-${idx}`}>
+                      <figure className="p-4 rounded-2xl" style={{ backgroundColor: 'var(--surface-color)', boxShadow: 'var(--shadow)' }}>
+                        <div className="overflow-hidden rounded-lg border" style={{ borderColor: 'var(--border-color)' }}>
+                          <img
+                            src={a.image}
+                            alt={a.title || a.from || `Appreciation ${idx + 1}`}
+                            className="w-full h-auto object-contain"
+                            loading="lazy"
+                            onClick={() => trackEvent('open', 'appreciation', a.image)}
+                            onError={(e) => { (e.currentTarget as HTMLImageElement).style.display = 'none'; }}
+                          />
+                        </div>
+                        {(a.title || a.from || a.date || a.description) && (
+                          <figcaption className="mt-3 text-sm" style={{ color: 'var(--text-secondary)' }}>
+                            <div className="font-medium" style={{ color: 'var(--text-primary)' }}>{a.title}</div>
+                            <div>{a.from}{a.date ? ` • ${a.date}` : ''}</div>
+                            {a.description && <div className="mt-1">{a.description}</div>}
+                          </figcaption>
+                        )}
+                      </figure>
+                    </CarouselItem>
+                  ))}
+                </CarouselContent>
+                <CarouselPrevious className="left-2 -translate-y-1/2" />
+                <CarouselNext className="right-2 -translate-y-1/2" />
+              </Carousel>
+            ) : (
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-5xl mx-auto">
+                {appreciations.map((a, idx) => (
+                  <figure key={`appr-${idx}`} className="p-4 rounded-2xl fade-in" style={{ backgroundColor: 'var(--surface-color)', boxShadow: 'var(--shadow)' }}>
+                    <div className="overflow-hidden rounded-lg border" style={{ borderColor: 'var(--border-color)' }}>
+                      <img
+                        src={a.image}
+                        alt={a.title || a.from || `Appreciation ${idx + 1}`}
+                        className="w-full h-auto object-contain"
+                        loading="lazy"
+                        onClick={() => trackEvent('open', 'appreciation', a.image)}
+                        onError={(e) => { (e.currentTarget as HTMLImageElement).style.display = 'none'; }}
+                      />
+                    </div>
+                    {(a.title || a.from || a.date || a.description) && (
+                      <figcaption className="mt-3 text-sm" style={{ color: 'var(--text-secondary)' }}>
+                        <div className="font-medium" style={{ color: 'var(--text-primary)' }}>{a.title}</div>
+                        <div>{a.from}{a.date ? ` • ${a.date}` : ''}</div>
+                        {a.description && <div className="mt-1">{a.description}</div>}
+                      </figcaption>
+                    )}
+                  </figure>
+                ))}
+              </div>
+            )
           )}
         </div>
       </section>
