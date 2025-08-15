@@ -410,7 +410,7 @@ const Portfolio: React.FC = () => {
             <div className="relative">
               <button
                 aria-label={isDark ? 'Switch to Day' : 'Switch to Night'}
-                className="flex items-center gap-2 px-4 py-2 border rounded-lg transition-all duration-300"
+                className="flex items-center gap-3 px-4 py-2 border rounded-lg transition-all duration-300"
                 style={{
                   borderColor: 'var(--border-color)',
                   backgroundColor: 'var(--surface-color)',
@@ -424,17 +424,14 @@ const Portfolio: React.FC = () => {
                   e.currentTarget.style.boxShadow = 'none';
                 }}
               >
-                <div 
-                  className="w-4 h-4 rounded-full border-2"
-                  style={{
-                    backgroundColor: isDark ? '#1f2937' : '#3b82f6',
-                    borderColor: 'var(--border-color)'
-                  }}
-                />
-                <span className="text-sm font-medium">
+                <div className={`theme-switch ${isDark ? 'dark' : 'light'}`}>
+                  <div className="thumb">
+                    <i className={isDark ? 'fas fa-moon' : 'fas fa-sun'} />
+                  </div>
+                </div>
+                <span className="text-sm font-medium min-w-[46px] text-center">
                   {isDark ? 'Night' : 'Day'}
                 </span>
-                <i className={isDark ? 'fas fa-moon text-xs' : 'fas fa-sun text-xs'} />
               </button>
             </div>
 
