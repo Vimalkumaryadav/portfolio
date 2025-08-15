@@ -467,7 +467,7 @@ const Portfolio: React.FC = () => {
       </header>
 
       {/* Hero Section */}
-      <section id="home" className="hero">
+  <section id="home" className={`hero ${activeSection === 'home' ? 'is-active' : ''}`}>
         <div className="max-w-6xl mx-auto px-8">
           <div className="fade-in text-center">
             <div className="mb-8 flex justify-center">
@@ -537,7 +537,7 @@ const Portfolio: React.FC = () => {
       </section>
 
       {/* About Section */}
-      <section id="about" className="section">
+  <section id="about" className={`section ${activeSection === 'about' ? 'is-active' : ''}`}>
         <div className="max-w-6xl mx-auto px-8">
           <h2 className="text-4xl font-bold text-center mb-12 fade-in" style={{ color: 'var(--primary-color)' }}>
             About Me
@@ -551,7 +551,7 @@ const Portfolio: React.FC = () => {
       </section>
 
       {/* Experience Section */}
-      <section id="experience" className="section">
+  <section id="experience" className={`section ${activeSection === 'experience' ? 'is-active' : ''}`}>
         <div className="max-w-6xl mx-auto px-8">
           <h2 className="text-4xl font-bold text-center mb-12 fade-in" style={{ color: 'var(--primary-color)' }}>
             Professional Experience
@@ -611,7 +611,7 @@ const Portfolio: React.FC = () => {
       </section>
 
       {/* Skills Section */}
-      <section id="skills" className="section">
+  <section id="skills" className={`section ${activeSection === 'skills' ? 'is-active' : ''}`}>
         <div className="max-w-6xl mx-auto px-8">
           <h2 className="text-4xl font-bold text-center mb-12 fade-in" style={{ color: 'var(--primary-color)' }}>
             Technical Skills
@@ -912,7 +912,7 @@ const Portfolio: React.FC = () => {
       </section>
 
       {/* Education Section */}
-      <section id="education" className="section">
+  <section id="education" className={`section ${activeSection === 'education' ? 'is-active' : ''}`}>
         <div className="max-w-6xl mx-auto px-8">
           <h2 className="text-4xl font-bold text-center mb-12 fade-in" style={{ color: 'var(--primary-color)' }}>
             Education
@@ -935,7 +935,7 @@ const Portfolio: React.FC = () => {
       </section>
 
       {/* Recommendations Section */}
-      <section id="recommendations" className="section">
+  <section id="recommendations" className={`section ${activeSection === 'recommendations' ? 'is-active' : ''}`}>
         <div className="max-w-6xl mx-auto px-8">
           <h2 className="text-4xl font-bold text-center mb-12 fade-in" style={{ color: 'var(--primary-color)' }}>
             LinkedIn Recommendations
@@ -1044,7 +1044,7 @@ const Portfolio: React.FC = () => {
       </section>
 
       {/* Appreciations Section */}
-      <section id="appreciations" className="section">
+  <section id="appreciations" className={`section ${activeSection === 'appreciations' ? 'is-active' : ''}`}>
         <div className="max-w-6xl mx-auto px-8">
           <h2 className="text-4xl font-bold text-center mb-12 fade-in" style={{ color: 'var(--primary-color)' }}>
             Appreciations
@@ -1121,7 +1121,7 @@ const Portfolio: React.FC = () => {
       </section>
 
       {/* Contact Section */}
-      <section id="contact" className="section">
+  <section id="contact" className={`section ${activeSection === 'contact' ? 'is-active' : ''}`}>
         <div className="max-w-6xl mx-auto px-8">
           <h2 className="text-4xl font-bold text-center mb-12 fade-in" style={{ color: 'var(--primary-color)' }}>
             Get In Touch
