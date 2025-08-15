@@ -397,8 +397,7 @@ const Portfolio: React.FC = () => {
                       {link.label}
                       {activeSection === link.id && (
                         <span 
-                          className="absolute -bottom-2 left-0 right-0 h-0.5"
-                          style={{ backgroundColor: 'var(--primary-color)' }}
+                          className="absolute -bottom-2 left-0 right-0 h-0.5 underline-gradient"
                         />
                       )}
                     </a>
@@ -498,40 +497,18 @@ const Portfolio: React.FC = () => {
             <div className="flex justify-center gap-4 flex-wrap">
               <button
                 onClick={() => scrollToSection('contact')}
-                className="px-8 py-3 rounded-lg font-semibold transition-all duration-300 flex items-center gap-2 border-2"
-                style={{
-                  backgroundColor: 'var(--primary-color)',
-                  color: 'white',
-                  borderColor: 'var(--primary-color)'
-                }}
-                onMouseEnter={(e) => {
-                  e.currentTarget.style.backgroundColor = 'transparent';
-                  e.currentTarget.style.color = 'var(--primary-color)';
-                }}
-                onMouseLeave={(e) => {
-                  e.currentTarget.style.backgroundColor = 'var(--primary-color)';
-                  e.currentTarget.style.color = 'white';
-                }}
+                className="px-8 py-3 rounded-lg font-semibold transition-all duration-300 flex items-center gap-2 border-2 btn-gradient"
+                onMouseEnter={() => {}}
+                onMouseLeave={() => {}}
               >
                 <i className="fas fa-envelope" />
                 Get In Touch
               </button>
               <button
                 onClick={downloadResume}
-                className="px-8 py-3 rounded-lg font-semibold transition-all duration-300 flex items-center gap-2 border-2"
-                style={{
-                  backgroundColor: 'transparent',
-                  color: 'var(--primary-color)',
-                  borderColor: 'var(--primary-color)'
-                }}
-                onMouseEnter={(e) => {
-                  e.currentTarget.style.backgroundColor = 'var(--primary-color)';
-                  e.currentTarget.style.color = 'white';
-                }}
-                onMouseLeave={(e) => {
-                  e.currentTarget.style.backgroundColor = 'transparent';
-                  e.currentTarget.style.color = 'var(--primary-color)';
-                }}
+                className="px-8 py-3 rounded-lg font-semibold transition-all duration-300 flex items-center gap-2 border-2 btn-ghost-gradient"
+                onMouseEnter={() => {}}
+                onMouseLeave={() => {}}
               >
                 <i className="fas fa-download" />
                 Download Resume

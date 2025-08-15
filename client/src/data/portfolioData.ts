@@ -3,7 +3,7 @@ export const portfolioData = {
     name: "Vimal Kumar Yadav",
     title: "Software Engineer II & QA Automation Expert",
     email: "yadavvimalk@gmail.com",
-    phone: "+91 8688928060",
+    phone: "+91 9398462973",
     location: "Hyderabad, India",
     linkedin: "https://www.linkedin.com/in/yadavvk/",
     github: "https://github.com/Vimalkumaryadav",

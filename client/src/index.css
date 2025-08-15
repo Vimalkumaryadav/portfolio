@@ -265,6 +265,21 @@ body {
   animation: gradientShift 18s ease-in-out infinite alternate;
 }
 
+/* Amplified theme-aware gradient overlay */
+body::before {
+  content: '';
+  position: fixed;
+  inset: -15% -15% -15% -15%;
+  pointer-events: none;
+  background:
+    radial-gradient(1200px 360px at 8% -12%, rgb(var(--gA) / 0.38), transparent 66%),
+    radial-gradient(1100px 320px at 94% 112%, rgb(var(--gB) / 0.38), transparent 66%),
+    conic-gradient(from 200deg at 50% 50%, rgb(var(--gA) / 0.08), transparent 25%, rgb(var(--gB) / 0.08), transparent 50%, rgb(var(--gA) / 0.06), transparent 75%);
+  filter: blur(24px) saturate(1.1);
+  opacity: 0.5;
+  z-index: 0;
+}
+
 @keyframes gradientShift {
   0% { background-position: 0% 0%, 100% 100%, 0% 0%; }
   50% { background-position: 50% -10%, 60% 120%, 20% 20%; }
@@ -350,7 +365,7 @@ body {
   font-size: 4rem;
   font-weight: 700;
   margin-bottom: 1rem;
-  background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+  background: linear-gradient(135deg, rgb(var(--gA)), rgb(var(--gB)));
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -579,4 +594,38 @@ button:hover .theme-switch {
 .theme-switch,
 .theme-switch.dark {
   animation: gradientShiftSwitch 8s ease infinite;
+}
+
+/* Gradient buttons (optional utility) */
+.btn-gradient {
+  background: linear-gradient(90deg, rgb(var(--gA)), rgb(var(--gB)));
+  color: white !important;
+  border: 2px solid transparent !important;
+  box-shadow: 0 10px 20px rgb(0 0 0 / 0.15);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.btn-gradient:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 16px 28px rgb(0 0 0 / 0.2);
+}
+
+.btn-ghost-gradient {
+  background:
+    linear-gradient(var(--surface-color), var(--surface-color)) padding-box,
+    linear-gradient(90deg, rgb(var(--gA)), rgb(var(--gB))) border-box;
+  border: 2px solid transparent !important;
+  color: var(--primary-color) !important;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, color 0.2s ease;
+}
+.btn-ghost-gradient:hover {
+  color: white !important;
+  background:
+    linear-gradient(90deg, rgb(var(--gA)), rgb(var(--gB))) padding-box,
+    linear-gradient(90deg, rgb(var(--gA)), rgb(var(--gB))) border-box;
+  box-shadow: 0 16px 28px rgb(0 0 0 / 0.2);
+}
+
+/* Gradient underline for active nav link */
+.underline-gradient {
+  background: linear-gradient(90deg, rgb(var(--gA)), rgb(var(--gB)));
 }
