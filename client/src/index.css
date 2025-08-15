@@ -455,23 +455,6 @@ body {
   .hero-title {
     font-size: 3rem;
   }
-  /* Mobile carousel aesthetic similar to the reference */
-  .mobile-carousel-surface {
-    background: radial-gradient(800px 200px at 30% -10%, rgba(236, 72, 153, 0.2), transparent 60%),
-                radial-gradient(700px 200px at 70% 110%, rgba(59, 130, 246, 0.25), transparent 60%),
-                var(--background-color);
-  }
-  .mobile-card {
-    background-color: color-mix(in oklab, var(--surface-color) 90%, transparent);
-    border: 1px solid var(--border-color);
-    border-radius: 20px;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.08);
-    backdrop-filter: saturate(1.2) blur(6px);
-  }
-  .mobile-avatar {
-    box-shadow: 0 6px 20px rgba(0,0,0,0.15);
-    border: 3px solid var(--background-color);
-  }
   
   .experience-timeline::before {
     display: none;
