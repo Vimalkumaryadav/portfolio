@@ -248,9 +248,6 @@
 
 html {
   scroll-behavior: smooth;
-  /* Dramatic scroll: enable snap and account for sticky header */
-  scroll-snap-type: y proximity;
-  scroll-padding-top: var(--header-offset, 88px);
 }
 
 body {
@@ -350,11 +347,6 @@ body::before {
   background: linear-gradient(135deg, var(--surface-color) 0%, var(--background-color) 100%);
   position: relative;
   overflow: clip;
-  /* Dramatic transition feel */
-  transform: perspective(1200px) translateZ(0) scale(0.985);
-  filter: saturate(0.95) blur(0.4px);
-  opacity: 0.98;
-  transition: transform 600ms ease, filter 600ms ease, opacity 600ms ease;
 }
 
 /* Stronger gradient overlay for the hero area */
@@ -382,25 +374,7 @@ body::before {
 .section {
   padding: 4rem 0;
   scroll-margin-top: var(--header-offset, 88px);
-  /* Snap each section for a punchier scroll */
-  scroll-snap-align: start;
-  /* Dramatic transition feel */
-  transform: perspective(1200px) translateZ(0) scale(0.985);
-  filter: saturate(0.92) blur(0.6px);
-  opacity: 0.97;
-  transition: transform 600ms ease, filter 600ms ease, opacity 600ms ease;
 }
-
-/* Active section pops into full clarity */
-.section.is-active {
-  transform: none;
-  filter: none;
-  opacity: 1;
-}
-
-/* Make hero align with snap and pop when active */
-.hero { scroll-snap-align: start; }
-.hero.is-active { transform: none; filter: none; opacity: 1; }
 
 /* Subtle section overlay to unify the gradient look */
 .section {
