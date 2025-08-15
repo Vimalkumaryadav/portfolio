@@ -25,7 +25,7 @@ type Appreciation = {
 };
 
 const Portfolio: React.FC = () => {
-  const { theme, setTheme } = useTheme();
+  const { theme, setTheme, gradient, setGradient } = useTheme();
   const { trackPageView, trackEvent } = useAnalytics();
   const [activeSection, setActiveSection] = useState('home');
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -265,11 +265,25 @@ const Portfolio: React.FC = () => {
     };
   }, [isMobileMenuOpen]);
 
+  const recordClick = (e: React.MouseEvent) => {
+    (window as any).__lastClick = { x: e.clientX, y: e.clientY };
+  };
+
   const scrollToSection = (sectionId: string) => {
     const element = document.getElementById(sectionId);
     if (element) {
       const headerHeight = 80;
       const targetPosition = element.offsetTop - headerHeight;
+      // Page pulse effect emanating from last click pos if present
+      const pulse = document.createElement('div');
+      pulse.className = 'page-pulse';
+      const coords = (window as any).__lastClick as { x: number; y: number } | undefined;
+      const x = coords?.x ?? window.innerWidth / 2;
+      const y = coords?.y ?? headerHeight / 2;
+      pulse.style.setProperty('--x', x + 'px');
+      pulse.style.setProperty('--y', y + 'px');
+      document.body.appendChild(pulse);
+      setTimeout(() => pulse.remove(), 800);
       
       window.scrollTo({
         top: targetPosition,
@@ -362,6 +376,7 @@ const Portfolio: React.FC = () => {
                 e.preventDefault();
                 scrollToSection('home');
               }}
+              onMouseDown={recordClick}
             >
               VKY
             </a>
@@ -393,6 +408,7 @@ const Portfolio: React.FC = () => {
                         e.preventDefault();
                         scrollToSection(link.id);
                       }}
+                      onMouseDown={recordClick}
                     >
                       {link.label}
                       {activeSection === link.id && (
@@ -407,7 +423,7 @@ const Portfolio: React.FC = () => {
               </ul>
             </nav>
 
-            <div className="relative">
+            <div className="relative flex items-center gap-2">
               <button
                 aria-label={isDark ? 'Switch to Day' : 'Switch to Night'}
                 className="flex items-center gap-2 px-4 py-2 border rounded-lg transition-all duration-300"
@@ -435,6 +451,22 @@ const Portfolio: React.FC = () => {
                   {isDark ? 'Night' : 'Day'}
                 </span>
                 <i className={isDark ? 'fas fa-moon text-xs' : 'fas fa-sun text-xs'} />
+              </button>
+
+              <button
+                aria-label="Toggle Gradient Mode"
+                className="flex items-center gap-2 px-3 py-2 border rounded-lg transition-all duration-300"
+                style={{ borderColor: gradient === 'on' ? 'var(--primary-color)' : 'var(--border-color)', backgroundColor: 'var(--surface-color)', color: 'var(--text-primary)' }}
+                onClick={() => setGradient(gradient === 'on' ? 'off' : 'on')}
+                onMouseEnter={(e) => { (e.currentTarget as HTMLButtonElement).style.boxShadow = 'var(--shadow)'; }}
+                onMouseLeave={(e) => { (e.currentTarget as HTMLButtonElement).style.boxShadow = 'none'; }}
+              >
+                <span className="text-sm font-medium">Gradient {gradient === 'on' ? 'On' : 'Off'}</span>
+                <div className="flex -space-x-1">
+                  <span className="inline-block w-2 h-2 rounded-full" style={{ backgroundColor: 'rgb(255 0 128)' }} />
+                  <span className="inline-block w-2 h-2 rounded-full" style={{ backgroundColor: 'rgb(59 130 246)' }} />
+                  <span className="inline-block w-2 h-2 rounded-full" style={{ backgroundColor: 'rgb(16 185 129)' }} />
+                </div>
               </button>
             </div>
 
@@ -507,6 +539,7 @@ const Portfolio: React.FC = () => {
                   color: 'white',
                   borderColor: 'var(--primary-color)'
                 }}
+                onMouseDown={recordClick}
                 onMouseEnter={(e) => {
                   e.currentTarget.style.backgroundColor = 'transparent';
                   e.currentTarget.style.color = 'var(--primary-color)';
@@ -527,6 +560,7 @@ const Portfolio: React.FC = () => {
                   color: 'var(--primary-color)',
                   borderColor: 'var(--primary-color)'
                 }}
+                onMouseDown={recordClick}
                 onMouseEnter={(e) => {
                   e.currentTarget.style.backgroundColor = 'var(--primary-color)';
                   e.currentTarget.style.color = 'white';
