@@ -47,10 +47,13 @@ const Portfolio: React.FC = () => {
       setScrollProgress(scrolled);
       setIsHeaderScrolled(window.scrollY > 100);
       
-      // Update active section: pick the last section whose top has crossed the header
-  const sections = ['home', 'about', 'experience', 'skills', 'education', 'appreciations', 'recommendations', 'contact'];
+    // Update active section: pick the last section whose top has crossed the header
+  // Order must match the actual page order. Also align with header nav.
+  const sections = ['home', 'about', 'experience', 'skills', 'education', 'recommendations', 'appreciations', 'contact'];
   const headerEl = document.querySelector('.header') as HTMLElement | null;
-  const headerHeight = (headerEl?.getBoundingClientRect().height ?? 80) + 8;
+  const cssVar = getComputedStyle(document.documentElement).getPropertyValue('--header-offset');
+  const varPx = cssVar && cssVar.trim().endsWith('px') ? parseInt(cssVar, 10) : NaN;
+  const headerHeight = Number.isFinite(varPx) ? varPx : (headerEl?.getBoundingClientRect().height ?? 80) + 8;
       let current = 'home';
       for (const id of sections) {
         const el = document.getElementById(id);
@@ -281,7 +284,9 @@ const Portfolio: React.FC = () => {
     const element = document.getElementById(sectionId);
     if (element) {
   const headerEl = document.querySelector('.header') as HTMLElement | null;
-  const headerHeight = (headerEl?.getBoundingClientRect().height ?? 80) + 8;
+  const cssVar = getComputedStyle(document.documentElement).getPropertyValue('--header-offset');
+  const varPx = cssVar && cssVar.trim().endsWith('px') ? parseInt(cssVar, 10) : NaN;
+  const headerHeight = Number.isFinite(varPx) ? varPx : (headerEl?.getBoundingClientRect().height ?? 80) + 8;
   const rect = element.getBoundingClientRect();
   const targetPosition = window.scrollY + rect.top - headerHeight;
       
@@ -350,8 +355,8 @@ const Portfolio: React.FC = () => {
     { id: 'experience', label: 'Experience' },
     { id: 'skills', label: 'Skills' },
     { id: 'education', label: 'Education' },
-  { id: 'appreciations', label: 'Appreciations' },
   { id: 'recommendations', label: 'Recommendations' },
+  { id: 'appreciations', label: 'Appreciations' },
     { id: 'contact', label: 'Contact' }
   ];
 
@@ -380,7 +385,7 @@ const Portfolio: React.FC = () => {
               VKY
             </a>
             
-            <nav className="relative z-50">
+            <nav className="relative z-50" style={{ overflow: 'visible' }}>
       <ul
                 className={`mobile-nav-menu flex gap-8 max-md:${isMobileMenuOpen ? 'flex' : 'hidden'} max-md:fixed max-md:top-[72px] max-md:left-0 max-md:right-0 max-md:h-[calc(100vh-72px)] max-md:flex-col max-md:p-4 max-md:border-t`}
                 style={{
@@ -394,7 +399,7 @@ const Portfolio: React.FC = () => {
                 }}
               >
                 {navLinks.map(link => (
-                  <li key={link.id}>
+                  <li key={link.id} style={{ overflow: 'visible' }}>
                     <a
                       href={`#${link.id}`}
                       className={`font-medium transition-colors duration-300 relative ${
@@ -410,8 +415,9 @@ const Portfolio: React.FC = () => {
                     >
                       {link.label}
                       {activeSection === link.id && (
-                        <span 
-                          className="absolute -bottom-2 left-0 right-0 h-0.5 underline-gradient"
+                        <span
+                          className="absolute left-0 right-0 h-0.5 underline-gradient"
+                          style={{ bottom: -6, display: 'block' }}
                         />
                       )}
                     </a>
