@@ -555,7 +555,7 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  color: #f59e0b; /* sun color */
+  color: #3b82f6; /* sun color aligned to brand blue */
   font-size: 12px;
   transform: translateX(0);
   transition: transform 0.35s ease, background 0.35s ease, color 0.35s ease, box-shadow 0.3s ease;
