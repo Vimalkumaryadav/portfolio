@@ -2,7 +2,7 @@ import React, { useEffect, useMemo, useState } from 'react';
 import { useTheme } from './ThemeProvider';
 import { portfolioData } from '../data/portfolioData';
 import { useAnalytics } from '../hooks/useAnalytics';
-import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from './ui/carousel';
+import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious, CarouselDots } from './ui/carousel';
 
 // Theme type comes from ThemeProvider; we only toggle between 'light' and 'dark'
 
@@ -625,12 +625,13 @@ const Portfolio: React.FC = () => {
             Technical Skills
           </h2>
           {isSmallScreen ? (
+            <div className="mobile-carousel-surface rounded-2xl py-2">
             <Carousel className="max-w-5xl mx-auto">
               <CarouselContent>
                 {Object.entries(portfolioData.skills).map(([category, skills]) => (
                   <CarouselItem key={category}>
                     <div
-                      className="p-8 rounded-2xl"
+                      className="p-8 rounded-2xl mobile-card"
                       style={{ backgroundColor: 'var(--surface-color)', boxShadow: 'var(--shadow)' }}
                     >
                       <h3 className="text-xl font-semibold mb-6 text-center" style={{ color: 'var(--primary-color)' }}>
@@ -771,7 +772,9 @@ const Portfolio: React.FC = () => {
               </CarouselContent>
               <CarouselPrevious className="left-2 -translate-y-1/2" />
               <CarouselNext className="right-2 -translate-y-1/2" />
+              <CarouselDots />
             </Carousel>
+            </div>
           ) : (
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto">
               {Object.entries(portfolioData.skills).map(([category, skills]) => (
@@ -970,16 +973,17 @@ const Portfolio: React.FC = () => {
             </div>
           ) : (
             isSmallScreen ? (
+              <div className="mobile-carousel-surface rounded-2xl py-2">
               <Carousel className="max-w-5xl mx-auto">
                 <CarouselContent>
                   {allRecommendations.map((rec, idx) => (
                     <CarouselItem key={`${rec.name}-${idx}`}>
                       <div
-                        className="p-6 rounded-2xl h-full flex flex-col"
+                        className="p-6 rounded-2xl h-full flex flex-col mobile-card"
                         style={{ backgroundColor: 'var(--surface-color)', boxShadow: 'var(--shadow)' }}
                       >
                         <div className="flex items-center gap-4 mb-4">
-                          <div className="w-12 h-12 rounded-full flex items-center justify-center border-2 overflow-hidden" style={{ borderColor: 'var(--primary-color)' }} aria-hidden="true">
+                          <div className="w-14 h-14 rounded-full flex items-center justify-center overflow-hidden mobile-avatar" style={{ borderColor: 'var(--primary-color)' }} aria-hidden="true">
                             {rec.avatar ? (
                               <img src={rec.avatar} alt={rec.name} className="w-full h-full object-cover" />
                             ) : (
@@ -1009,7 +1013,9 @@ const Portfolio: React.FC = () => {
                 </CarouselContent>
                 <CarouselPrevious className="left-2 -translate-y-1/2" />
                 <CarouselNext className="right-2 -translate-y-1/2" />
+                <CarouselDots />
               </Carousel>
+              </div>
             ) : (
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-5xl mx-auto">
                 {allRecommendations.map((rec, idx) => (
@@ -1070,11 +1076,12 @@ const Portfolio: React.FC = () => {
             </div>
           ) : (
             isSmallScreen ? (
+              <div className="mobile-carousel-surface rounded-2xl py-2">
               <Carousel className="max-w-5xl mx-auto">
                 <CarouselContent>
                   {appreciations.map((a, idx) => (
                     <CarouselItem key={`appr-${idx}`}>
-                      <figure className="p-4 rounded-2xl" style={{ backgroundColor: 'var(--surface-color)', boxShadow: 'var(--shadow)' }}>
+                      <figure className="p-4 rounded-2xl mobile-card" style={{ backgroundColor: 'var(--surface-color)', boxShadow: 'var(--shadow)' }}>
                         <div className="overflow-hidden rounded-lg border" style={{ borderColor: 'var(--border-color)' }}>
                           <img
                             src={a.image}
@@ -1098,7 +1105,9 @@ const Portfolio: React.FC = () => {
                 </CarouselContent>
                 <CarouselPrevious className="left-2 -translate-y-1/2" />
                 <CarouselNext className="right-2 -translate-y-1/2" />
+                <CarouselDots />
               </Carousel>
+              </div>
             ) : (
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-5xl mx-auto">
                 {appreciations.map((a, idx) => (

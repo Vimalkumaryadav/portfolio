@@ -258,3 +258,41 @@ export {
   CarouselPrevious,
   CarouselNext,
 }
+
+// New: simple pagination dots component
+export function CarouselDots({ className }: { className?: string }) {
+  const { api } = useCarousel()
+  const [count, setCount] = React.useState(0)
+  const [selected, setSelected] = React.useState(0)
+
+  React.useEffect(() => {
+    if (!api) return
+    const onSelect = () => setSelected(api.selectedScrollSnap())
+    setCount(api.scrollSnapList().length)
+    setSelected(api.selectedScrollSnap())
+    api.on("select", onSelect)
+    api.on("reInit", onSelect)
+    return () => {
+      api.off("select", onSelect)
+      api.off("reInit", onSelect)
+    }
+  }, [api])
+
+  if (!api || count <= 1) return null
+
+  return (
+    <div className={cn("mt-4 flex items-center justify-center gap-2", className)}>
+      {Array.from({ length: count }).map((_, i) => (
+        <button
+          key={i}
+          aria-label={`Go to slide ${i + 1}`}
+          onClick={() => api.scrollTo(i)}
+          className={cn(
+            "h-2 w-2 rounded-full transition-all",
+            i === selected ? "w-6 bg-foreground/80" : "bg-foreground/40 hover:bg-foreground/60"
+          )}
+        />)
+      )}
+    </div>
+  )
+}
