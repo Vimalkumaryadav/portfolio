@@ -20,9 +20,9 @@ export const portfolioData = {
       period: "Nov 2023 – Present",
       location: "",
       description: [
-        "Designed and developed automated test cases using the WebDriverIO–Node.js framework",
+        "Design and implementation of a robust WebDriverIO + Mocha automation framework, which improved our regression testing efficiency by 50%",
         "Utilized Perforce for version control, ensuring efficient collaboration and code management",
-        "Performed regular maintenance and defect fixes for the regression test suite to ensure stability",
+        "Maintained a high-reliability regression suite with zero missed high-priority bugs across 3 consecutive releases",
         "Leveraged GitHub Copilot to refactor and optimize existing code for improved readability and performance"
       ]
     },
@@ -32,6 +32,7 @@ export const portfolioData = {
       period: "Mar 2022 – May 2023",
       location: "Hyderabad, India",
       description: [
+        "Automated 20+ critical API scenarios using Java, Selenium, and Rest Assured, significantly reducing manual effort",
         "Performed manual API testing using Postman to validate the quality, reliability, and functionality of RESTful APIs",
         "Developed Early Integration Testing (EIT) scripts to validate API functionality in the early stages of development",
         "Created and executed System Integration Testing (SIT) scripts to verify end-to-end API functionality",
